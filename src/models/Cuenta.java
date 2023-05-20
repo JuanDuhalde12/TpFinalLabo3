@@ -3,13 +3,11 @@ package models;
 public class Cuenta {
     private static int nroCuenta = 0;
     private String domicilioServicio;
-    private Cliente cliente;
     private Servicio servicio;
     private CategoriaDescuento categoria;
 
-    public Cuenta(String domicilioServicio, Cliente cliente, Servicio servicio, CategoriaDescuento categoria) {
+    public Cuenta(String domicilioServicio, Servicio servicio, CategoriaDescuento categoria) {
         this.domicilioServicio = domicilioServicio;
-        this.cliente = cliente;
         this.servicio = servicio;
         this.categoria = categoria;
     }
@@ -33,14 +31,6 @@ public class Cuenta {
         this.domicilioServicio = domicilioServicio;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     public Servicio getServicio() {
         return servicio;
     }
@@ -61,7 +51,6 @@ public class Cuenta {
     public String toString() {
         return "Cuenta{" +
                 "domicilioServicio='" + domicilioServicio + '\'' +
-                ", cliente=" + cliente.toString() +
                 ", servicio=" + servicio.toString() +
                 ", categoria descuento=" + categoria.toString() +
                 '}';

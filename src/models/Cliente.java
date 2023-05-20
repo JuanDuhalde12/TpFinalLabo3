@@ -1,8 +1,12 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cliente {
     private static int id = 0;
     private String nombreCompleto,telefono,email,celular,domicilio,cuit,ocupacion;
+    private List<Cuenta> listaCuentas;
 
     public Cliente(String nombreCompleto, String telefono, String email, String celular, String domicilio, String cuit, String ocupacion) {
         this.nombreCompleto = nombreCompleto;
@@ -12,11 +16,7 @@ public class Cliente {
         this.domicilio = domicilio;
         this.cuit = cuit;
         this.ocupacion = ocupacion;
-        id ++;
-    }
-
-    public Cliente(){
-        id ++;
+        this.listaCuentas = new ArrayList<>();
     }
 
     public static int getId() {
@@ -77,6 +77,18 @@ public class Cliente {
 
     public void setOcupacion(String ocupacion) {
         this.ocupacion = ocupacion;
+    }
+
+    public void listarCuentas(){
+        int i = 1;
+        for (Cuenta cuenta:listaCuentas) {
+            System.out.println(i + " " + cuenta.toString());
+            i++;
+        }
+    }
+
+    public void agregarCuenta(Cuenta cuenta){
+        listaCuentas.add(cuenta);
     }
 
     @Override
