@@ -92,7 +92,7 @@ public class ProgramaSeguridad extends JFrame implements ActionListener {
                 String nombreUsuario = nombreUsuarioTextField.getText();
                 String contraseña = new String(contraseñaPasswordField.getPassword());
 
-                Usuario usuario = new Usuario(nombreUsuario, contraseña, "", TipoUsuario.ADMINISTRADOR);
+                Usuario usuario = new Usuario(nombreUsuario, contraseña, TipoUsuario.ADMINISTRADOR);
                 usuarios.add(usuario);
 
                 JOptionPane.showMessageDialog(this, "¡Registro exitoso!");
@@ -100,7 +100,7 @@ public class ProgramaSeguridad extends JFrame implements ActionListener {
                 String nombreUsuario = nombreUsuarioTextField.getText();
                 String contraseña = new String(contraseñaPasswordField.getPassword());
 
-                Usuario usuario = new Usuario(nombreUsuario, contraseña, "", TipoUsuario.USUARIO);
+                Usuario usuario = new Usuario(nombreUsuario, contraseña, TipoUsuario.USUARIO);
                 usuarios.add(usuario);
 
                 JOptionPane.showMessageDialog(this, "¡Registro exitoso!");

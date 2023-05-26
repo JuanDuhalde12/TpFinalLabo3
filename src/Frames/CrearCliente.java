@@ -81,7 +81,7 @@ class CrearCliente extends JFrame implements ActionListener {
             String cuit = cuitTextField.getText();
             String ocupacion = ocupacionTextField.getText();
 
-            Cliente cliente = new Cliente(nombreCompleto,telefono,email,celular,direccion,cuit,ocupacion);
+            Cliente cliente = new Cliente();
             clientes.add(cliente);
 
             JOptionPane.showMessageDialog(this, "Cliente registrado con éxito.");

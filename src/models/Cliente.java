@@ -3,32 +3,30 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cliente {
+public class Cliente extends Persona {
     private static int id = 0;
-    private String nombreCompleto,telefono,email,celular,domicilio,cuit,ocupacion;
+    private String telefono, celular, domicilio, ocupacion;
     private List<Cuenta> listaCuentas;
 
-    public Cliente(String nombreCompleto, String telefono, String email, String celular, String domicilio, String cuit, String ocupacion) {
-        this.nombreCompleto = nombreCompleto;
+
+    public Cliente(String nombreCompleto, String dni, String email, String telefono, String celular, String domicilio, String ocupacion, List<Cuenta> listaCuentas) {
+        super(nombreCompleto, dni, email);
         this.telefono = telefono;
-        this.email = email;
         this.celular = celular;
         this.domicilio = domicilio;
-        this.cuit = cuit;
         this.ocupacion = ocupacion;
-        this.listaCuentas = new ArrayList<>();
+        this.listaCuentas = listaCuentas;
+    }
+
+    public Cliente() {
     }
 
     public static int getId() {
         return id;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
-    }
-
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public static void setId(int id) {
+        Cliente.id = id;
     }
 
     public String getTelefono() {
@@ -37,14 +35,6 @@ public class Cliente {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getCelular() {
@@ -61,14 +51,6 @@ public class Cliente {
 
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
-    }
-
-    public String getCuit() {
-        return cuit;
-    }
-
-    public void setCuit(String cuit) {
-        this.cuit = cuit;
     }
 
     public String getOcupacion() {
@@ -93,14 +75,11 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{ id= " + id +
-                ", nombreCompleto='" + nombreCompleto + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", email='" + email + '\'' +
-                ", celular='" + celular + '\'' +
+        return "Cliente{" +
+                "telefono='" + telefono + '\'' +
                 ", domicilio='" + domicilio + '\'' +
-                ", cuit='" + cuit + '\'' +
                 ", ocupacion='" + ocupacion + '\'' +
-                '}';
+                ", listaCuentas=" + listaCuentas +
+                "} " + super.toString();
     }
 }
