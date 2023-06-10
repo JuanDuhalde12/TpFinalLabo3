@@ -1,6 +1,6 @@
 package models;
 
-public enum TipoUsuario{
-     ADMINISTRADOR,
-     USUARIO;
+public enum TipoUsuario {
+        ADMINISTRADOR,
+        USUARIO;
 }
