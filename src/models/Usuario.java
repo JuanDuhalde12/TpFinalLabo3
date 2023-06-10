@@ -1,21 +1,25 @@
 package models;
 
 
-public class Usuario {
+public class Usuario extends Persona{
     private String nombre;
     private String contraseña;
-    private String email;
     private TipoUsuario tipoUsuario;
 
-    public Usuario(String nombre, String contraseña, String email, TipoUsuario tipoUsuario) {
+    public Usuario(String nombreCompleto, String dni, String email, String nombre, String contraseña, TipoUsuario tipoUsuario) {
+        super(nombreCompleto, dni, email);
         this.nombre = nombre;
         this.contraseña = contraseña;
-        this.email = email;
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public Usuario(String nombre, String contraseña, TipoUsuario tipoUsuario) {
+        this.nombre = nombre;
+        this.contraseña = contraseña;
         this.tipoUsuario = tipoUsuario;
     }
 
     public Usuario() {
-
     }
 
     public String getNombre() {
@@ -34,14 +38,6 @@ public class Usuario {
         this.contraseña = contraseña;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public TipoUsuario getTipoUsuario() {
         return tipoUsuario;
     }
@@ -52,10 +48,10 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" +
-                "nombre='" + nombre + '\'' +
+        return "Usuario{ " + super.toString() +
+                ", nombre='" + nombre + '\'' +
                 ", contraseña='" + contraseña + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+                ", tipoUsuario=" + tipoUsuario +
+                "} " ;
     }
 }

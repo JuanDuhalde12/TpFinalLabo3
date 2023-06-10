@@ -1,8 +1,13 @@
 package models;
 
+import Coleccion.Coleccion;
+
 public class Empresa {
     private static int id = 0;
     private String telefono,email,domicilio,cuit;
+    private Coleccion<Cliente> clientes;
+    private Coleccion<Usuario> usuarios;
+
 
     public Empresa(String telefono, String email, String domicilio, String cuit) {
         id ++;
