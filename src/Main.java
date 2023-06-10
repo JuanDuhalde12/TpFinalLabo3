@@ -25,7 +25,7 @@ public class Main {
         LocalDate date = LocalDate.parse(fecha);
         System.out.println(date);
 
-        Servicio monitoreo = new Servicio(155,fechaHoy.toString(),aumento.toString(),false);
+        Servicio monitoreo = new Servicio(1500,fechaHoy.toString(),aumento.toString(),false);
         CategoriaDescuento cat1 = new CategoriaDescuento("cat 1",15);
         Cuenta cta1 = new Cuenta("Roldan 557",monitoreo,cat1);
         Servicio instalacion = new Servicio(3800,fechaHoy.toString(),aumento.toString(),false);
@@ -35,16 +35,21 @@ public class Main {
         c1.agregarCuenta(cta2);
         ArchivoUsuario archivoPersona = new ArchivoUsuario();
         ArchivoCliente archivoCliente = new ArchivoCliente();
+        ArchivoServicio archivoServicio = new ArchivoServicio();
 
         /*archivoPersona.agregarUsuario(admin);
         archivoPersona.agregarUsuario(user1);
         archivoPersona.crearArchivoJson();
         archivoCliente.agregarCliente(c1);
         archivoCliente.agregarCliente(c2);
-        archivoCliente.crearArchivo();*/
+        archivoCliente.crearArchivo();
+        archivoServicio.agregarServicio(monitoreo);
+        archivoServicio.agregarServicio(instalacion);
+        archivoServicio.crearArchivo();*/
 
         archivoPersona.leerArchivo();
         archivoCliente.leerArchivo();
+        archivoServicio.leerArchivo();
 
 
         System.out.println("Lista Archivo Persona");
@@ -53,6 +58,9 @@ public class Main {
 
         System.out.println("Lista Archivo Clientes");
         archivoCliente.listar();
+
+        System.out.println("Lista Archivo Servicios");
+        archivoServicio.listar();
 
     }
 }
