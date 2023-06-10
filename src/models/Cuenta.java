@@ -4,15 +4,34 @@ public class Cuenta {
     private static int nroCuenta = 0;
     private String domicilioServicio;
     private Servicio servicio;
+    private String fechaAlta,fechaAumento;
     private CategoriaDescuento categoria;
 
-    public Cuenta(String domicilioServicio, Servicio servicio, CategoriaDescuento categoria) {
+    public Cuenta(String domicilioServicio, Servicio servicio, CategoriaDescuento categoria, String fechaAlta, String fechaAumento) {
         this.domicilioServicio = domicilioServicio;
         this.servicio = servicio;
         this.categoria = categoria;
+        this.fechaAumento = fechaAumento;
+        this.fechaAlta = fechaAlta;
     }
 
     public Cuenta() {
+    }
+
+    public String getFechaAlta() {
+        return fechaAlta;
+    }
+
+    public void setFechaAlta(String fechaAlta) {
+        this.fechaAlta = fechaAlta;
+    }
+
+    public String getFechaAumento() {
+        return fechaAumento;
+    }
+
+    public void setFechaAumento(String fechaAumento) {
+        this.fechaAumento = fechaAumento;
     }
 
     public static int getNroCuenta() {
@@ -51,8 +70,10 @@ public class Cuenta {
     public String toString() {
         return "Cuenta{" +
                 "domicilioServicio='" + domicilioServicio + '\'' +
-                ", servicio=" + servicio.toString() +
-                ", categoria descuento=" + categoria.toString() +
+                ", servicio=" + servicio +
+                ", fechaAlta='" + fechaAlta + '\'' +
+                ", fechaAumento='" + fechaAumento + '\'' +
+                ", categoria=" + categoria +
                 '}';
     }
 }

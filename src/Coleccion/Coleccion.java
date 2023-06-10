@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Coleccion <T> implements Serializable {
-    private List<T> lista;
+    private ArrayList<T> lista;
 
     public Coleccion() {
         this.lista = new ArrayList<T>();
     }
 
-    public List<T> getLista() {
+    public ArrayList<T> getLista() {
         return lista;
     }
 
-    public void setLista(List<T> lista) {
+    public void setLista(ArrayList<T> lista) {
         this.lista = lista;
     }
 

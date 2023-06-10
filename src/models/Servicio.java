@@ -1,22 +1,27 @@
 package models;
 
-import java.time.LocalDate;
-import java.util.Date;
 
 public class Servicio {
     private static int id = 0;
+    private String nombreServicio;
     private double precio;
-    private String fechaAlta,fechaAumento;
     private boolean isComodato;
 
-    public Servicio(double precio, String fechaAlta, String fechaAumento, boolean isComodato) {
+    public Servicio(double precio, boolean isComodato, String nombreServicio) {
         this.precio = precio;
-        this.fechaAlta = fechaAlta;
-        this.fechaAumento = fechaAumento;
         this.isComodato = isComodato;
+        this.nombreServicio = nombreServicio;
     }
 
     public Servicio() {
+    }
+
+    public String getNombreServicio() {
+        return nombreServicio;
+    }
+
+    public void setNombreServicio(String nombreServicio) {
+        this.nombreServicio = nombreServicio;
     }
 
     public static int getId() {
@@ -35,22 +40,6 @@ public class Servicio {
         this.precio = precio;
     }
 
-    public String getFechaAlta() {
-        return fechaAlta;
-    }
-
-    public void setFechaAlta(String fechaAlta) {
-        this.fechaAlta = fechaAlta;
-    }
-
-    public String getFechaAumento() {
-        return fechaAumento;
-    }
-
-    public void setFechaAumento(String fechaAumento) {
-        this.fechaAumento = fechaAumento;
-    }
-
     public boolean isComodato() {
         return isComodato;
     }
@@ -62,9 +51,8 @@ public class Servicio {
     @Override
     public String toString() {
         return "Servicio{" +
-                "precio=" + precio +
-                ", fechaAlta=" + fechaAlta +
-                ", fechaAumento=" + fechaAumento +
+                "nombreServicio='" + nombreServicio + '\'' +
+                ", precio=" + precio +
                 ", isComodato=" + isComodato +
                 '}';
     }
