@@ -5,17 +5,16 @@ import java.util.List;
 
 public class Cliente extends Persona {
     private static int id = 0;
-    private String telefono, celular, domicilio, ocupacion;
+    private String telefono, domicilio, ocupacion;
     private List<Cuenta> listaCuentas;
 
 
-    public Cliente(String nombreCompleto, String dni, String email, String telefono, String celular, String domicilio, String ocupacion, List<Cuenta> listaCuentas) {
+    public Cliente(String nombreCompleto, String dni, String email, String telefono, String domicilio, String ocupacion) {
         super(nombreCompleto, dni, email);
         this.telefono = telefono;
-        this.celular = celular;
         this.domicilio = domicilio;
         this.ocupacion = ocupacion;
-        this.listaCuentas = listaCuentas;
+        this.listaCuentas = new ArrayList<>();
     }
 
     public Cliente() {
@@ -35,14 +34,6 @@ public class Cliente extends Persona {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
     }
 
     public String getDomicilio() {
@@ -73,13 +64,19 @@ public class Cliente extends Persona {
         listaCuentas.add(cuenta);
     }
 
+    public void mostrarCuentas(){
+        for(Cuenta cta : listaCuentas){
+            System.out.println(cta.toString());
+        }
+    }
+
     @Override
     public String toString() {
-        return "Cliente{" +
-                "telefono='" + telefono + '\'' +
+        return "Cliente{ " + super.toString() +
+                ", telefono='" + telefono + '\'' +
                 ", domicilio='" + domicilio + '\'' +
                 ", ocupacion='" + ocupacion + '\'' +
                 ", listaCuentas=" + listaCuentas +
-                "} " + super.toString();
+                "} " ;
     }
 }

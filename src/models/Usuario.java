@@ -48,10 +48,10 @@ public class Usuario extends Persona{
 
     @Override
     public String toString() {
-        return "Usuario{" +
-                "nombre='" + nombre + '\'' +
+        return "Usuario{ " + super.toString() +
+                ", nombre='" + nombre + '\'' +
                 ", contraseña='" + contraseña + '\'' +
                 ", tipoUsuario=" + tipoUsuario +
-                "} " + super.toString();
+                "} " ;
     }
 }

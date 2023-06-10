@@ -1,5 +1,6 @@
 package models;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Comodato extends Servicio{
@@ -10,7 +11,7 @@ public class Comodato extends Servicio{
     public Comodato() {
     }
 
-    public Comodato(double precio, Date fechaAlta, Date fechaAumento, boolean isComodato, String tipoInstalacion, String proveedor, Integer telPanel) {
+    public Comodato(double precio, String fechaAlta, String fechaAumento, boolean isComodato, String tipoInstalacion, String proveedor, Integer telPanel) {
         super(precio, fechaAlta, fechaAumento, isComodato);
         this.tipoInstalacion = tipoInstalacion;
         this.proveedor = proveedor;
