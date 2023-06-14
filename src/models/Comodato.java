@@ -11,8 +11,8 @@ public class Comodato extends Servicio{
     public Comodato() {
     }
 
-    public Comodato(double precio, String fechaAlta, String fechaAumento, boolean isComodato, String tipoInstalacion, String proveedor, Integer telPanel) {
-        super(precio, fechaAlta, fechaAumento, isComodato);
+    public Comodato(double precio, boolean isComodato, String tipoInstalacion, String proveedor, Integer telPanel,String nombreServicio) {
+        super(precio, isComodato,nombreServicio);
         this.tipoInstalacion = tipoInstalacion;
         this.proveedor = proveedor;
         this.telPanel = telPanel;

@@ -9,20 +9,19 @@ import com.google.gson.reflect.TypeToken;
 import models.*;
 
 public class ArchivoUsuario {
-    private ArrayList<Usuario> listaUsuarios;
+    private Gson gson;
     private File file;
 
     public ArchivoUsuario(){
-        this.listaUsuarios = new ArrayList<>();
+        gson = new Gson();
         file = new File("Archivos/usuarios.json");
     }
 
-    public void crearArchivoJson(){
+    public void crearArchivoJson(ArrayList<Usuario> listaUsuarios){
         FileWriter writer = null;
-        if(!file.exists()) {
+        if(!listaUsuarios.isEmpty()) {
             try {
                 writer = new FileWriter(file);
-                Gson gson = new Gson();
                 gson.toJson(listaUsuarios, writer);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -38,14 +37,14 @@ public class ArchivoUsuario {
         }
     }
 
-    public void leerArchivo(){
+    public ArrayList<Usuario> leerArchivo(){
         FileReader reader = null;
+        ArrayList<Usuario> lista = null;
         if(file.exists()){
             try{
                 reader = new FileReader(file);
-                Gson gson = new Gson();
                 Type clienteListType = new TypeToken<ArrayList<Usuario>>() {}.getType();
-                this.listaUsuarios = gson.fromJson(reader, clienteListType);
+                lista = gson.fromJson(reader, clienteListType);
             }catch (IOException e) {
                 e.printStackTrace();
             }finally {
@@ -58,14 +57,6 @@ public class ArchivoUsuario {
         }else{
             System.out.println("El archivo usuarios.json no existe");
         }
-    }
-    public void agregarUsuario(Usuario c){
-        this.listaUsuarios.add(c);
-    }
-
-    public void listarPersonas(){
-        for (Usuario c:listaUsuarios) {
-            System.out.println(c.toString());
-        }
+        return lista;
     }
 }

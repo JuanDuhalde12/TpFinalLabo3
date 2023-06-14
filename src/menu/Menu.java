@@ -1,20 +1,31 @@
 package menu;
 
+import Exceptions.LoginException;
+import models.Empresa;
 import models.TipoUsuario;
 import models.Usuario;
+
+import java.io.Console;
 import java.util.Scanner;
 
 public class Menu {
     private Scanner scan;
-    private Usuario admin;
-    private TipoUsuario tipoUsuario;
+    private Empresa empresa;
+    private Console consola;
+    private Usuario usuario;
 
     public Menu(){
+        this.consola = System.console();
         scan = new Scanner(System.in);
-        admin = new Usuario();
-        admin.setContraseña("admin");
-        admin.setNombre("admin");
-        admin.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
+        this.empresa = new Empresa("451-0111","empresa@seguridad.com","lala 123","20335558796");
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public void iniciar(){
@@ -32,15 +43,22 @@ public class Menu {
                     String usuario = scan.nextLine();
                     System.out.println("Contraseña: ");
                     String contraseña = scan.nextLine();
-                    if(usuario.equals(admin.getNombre()) && contraseña.equals(admin.getContraseña())){
-                        System.out.println("Bienvenido administrador");
-                    }else{
-                        System.out.println("La contraseña es incorrecta");
+                    try{
+                        this.usuario = empresa.buscarUsuario(usuario,contraseña);
+                        if(usuario != null){
+                            System.out.println("Bienvenido al sistema "+this.usuario.getNombre());
+                        }
+                    }catch(LoginException e){
+                        System.out.println(e.getMessage());
                     }
 
                     break;
+                default:
+                    System.out.println("Cerrando sistema....");
+                    System.out.println("Actualizando archivos...");
+                    empresa.actualizarArchivos();
+                    break;
             }
         }while(opcion!=0);
-
     }
 }

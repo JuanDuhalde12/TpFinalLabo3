@@ -15,53 +15,44 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.*;
+import models.Servicio;
 import models.Usuario;
 
 public class ArchivoCliente implements Serializable {
-    private ArrayList<Cliente> listaClientes;
     private Gson gson;
     private File file;
 
     public ArchivoCliente(){
-        listaClientes = new ArrayList<Cliente>();
         gson = new Gson();
         file = new File("Archivos/clientes.json");
-
     }
 
-    public void agregarCliente(Cliente cliente){
-        this.listaClientes.add(cliente);
-    }
-
-    public void crearArchivo() {
+    public void crearArchivo(ArrayList<Cliente> listaClientes) {
         FileWriter writer = null;
-        if(!file.exists()) {
-            try {
-                writer = new FileWriter(file);
-                Gson gson = new Gson();
-                gson.toJson(listaClientes, writer);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
+        if(!listaClientes.isEmpty()){
                 try {
-                    writer.close();
+                    writer = new FileWriter(file);
+                    gson.toJson(listaClientes, writer);
                 } catch (IOException e) {
                     e.printStackTrace();
+                } finally {
+                    try {
+                        writer.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        }else{
-            System.out.println("El archivo usuarios.json ya existe");
         }
     }
 
-    public void leerArchivo(){
+    public ArrayList<Cliente> leerArchivo(){
         FileReader reader = null;
+        ArrayList<Cliente> listaClientes = null;
         if(file.exists()){
             try{
                 reader = new FileReader(file);
-                Gson gson = new Gson();
                 Type clienteListType = new TypeToken<ArrayList<Cliente>>() {}.getType();
-                this.listaClientes = gson.fromJson(reader, clienteListType);
+                listaClientes = gson.fromJson(reader, clienteListType);
             }catch (IOException e) {
                 e.printStackTrace();
             }finally {
@@ -74,12 +65,8 @@ public class ArchivoCliente implements Serializable {
         }else{
             System.out.println("El archivo usuarios.json no existe");
         }
+        return listaClientes;
     }
 
-    public void listar(){
-        for (Cliente c:this.listaClientes) {
-            System.out.println(c.toString());
-        }
-    }
 
 }
