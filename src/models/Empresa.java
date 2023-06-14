@@ -104,9 +104,10 @@ public class Empresa {
         for (Usuario u:lista) {
             if(u.getNombre().equals(nombre)&&u.getContraseña().equals(contraseña)){
                 buscado = u;
-            } else if (!u.getNombre().equals(nombre)||!u.getContraseña().equals(contraseña)) {
-                throw new LoginException("Usuario o contraseña no validos");
             }
+        }
+        if(buscado==null){
+            throw new LoginException("Usuario o contraseña no validos");
         }
         return buscado;
     }

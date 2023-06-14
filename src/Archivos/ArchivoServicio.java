@@ -2,7 +2,6 @@ package Archivos;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import models.Cliente;
 import models.Servicio;
 
 import java.io.File;
@@ -19,7 +18,6 @@ public class ArchivoServicio {
     public ArchivoServicio(){
         gson = new Gson();
         file = new File("Archivos/servicios.json");
-
     }
 
     public void crearArchivo(ArrayList<Servicio> listaServicios) {
