@@ -72,11 +72,10 @@ public class Cliente extends Persona {
 
     @Override
     public String toString() {
-        return "Cliente{ " + super.toString() +
+        return  super.toString() +
                 ", telefono='" + telefono + '\'' +
                 ", domicilio='" + domicilio + '\'' +
                 ", ocupacion='" + ocupacion + '\'' +
-                ", listaCuentas=" + listaCuentas +
-                "} " ;
+                ", listaCuentas=" + listaCuentas ;
     }
 }

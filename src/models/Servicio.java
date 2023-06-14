@@ -37,7 +37,12 @@ public class Servicio {
     }
 
     public void setPrecio(double precio) {
-        this.precio = precio;
+        if(this.isComodato){
+            this.precio = precio + 1500;
+        }else{
+            this.precio = precio;
+        }
+
     }
 
     public boolean isComodato() {

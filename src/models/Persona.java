@@ -38,10 +38,8 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "Persona{" +
-                "nombreCompleto='" + nombreCompleto + '\'' +
-                ", dni='" + dni + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return "nombre:'" + nombreCompleto + '\'' +
+                ", dni:'" + dni + '\'' +
+                ", email:'" + email + '\'';
     }
 }

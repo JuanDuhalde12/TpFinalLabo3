@@ -13,6 +13,7 @@ public class Proveedor {
     }
 
     public Proveedor(String nombre, String claveOperador) {
+        this.id++;
         this.nombre = nombre;
         this.claveOperador = claveOperador;
         this.cuentas = new HashMap<>();
