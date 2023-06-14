@@ -9,9 +9,11 @@ import com.google.gson.reflect.TypeToken;
 import models.*;
 
 public class ArchivoUsuario {
+    private Gson gson;
     private File file;
 
     public ArchivoUsuario(){
+        gson = new Gson();
         file = new File("Archivos/usuarios.json");
     }
 
@@ -20,7 +22,6 @@ public class ArchivoUsuario {
         if(!listaUsuarios.isEmpty()) {
             try {
                 writer = new FileWriter(file);
-                Gson gson = new Gson();
                 gson.toJson(listaUsuarios, writer);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -42,7 +43,6 @@ public class ArchivoUsuario {
         if(file.exists()){
             try{
                 reader = new FileReader(file);
-                Gson gson = new Gson();
                 Type clienteListType = new TypeToken<ArrayList<Usuario>>() {}.getType();
                 lista = gson.fromJson(reader, clienteListType);
             }catch (IOException e) {

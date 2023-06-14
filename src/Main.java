@@ -13,56 +13,79 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
-        //comenzar();
+      //comenzar();
 
-
-        Menu menu = new Menu();
-        menu.iniciar();
+       Menu menu = new Menu();
+       menu.iniciar();
 
 
     }
 
-     public static void comenzar(){
-       Cliente c1 = new Cliente("Juan Ignacio Duhalde","34851803","juan@juan.com.ar","4510112","lala 123","empleado");
-        Cliente c2 = new Cliente("Roberto Perez","13885989","Roberto@Roberto.com.ar","4788858","pepe 123","abogado");
-        Usuario admin = new Usuario("admin","0","admin@admin.com","admin","admin",TipoUsuario.ADMINISTRADOR);
-        Usuario user1 = new Usuario("Juan Ignacio Duhalde","34851803","jduhalde@gmail.com","jduhalde","Juan851803",TipoUsuario.USUARIO);
+    //FUNCION QUE CREA HARDCODEADO VARIOS OBJETOS CON LOS CUALES VA A FUNCIONAR EL SISTEMA
+     public static void comenzar() {
+      //Crear clientes
+      Cliente c1 = new Cliente("Juan Ignacio Duhalde", "34851803", "juan@juan.com.ar", "4510112", "lala 123", "empleado");
+      Cliente c2 = new Cliente("Roberto Perez", "13885989", "Roberto@Roberto.com.ar", "4788858", "pepe 123", "abogado");
 
-        LocalDate fechaHoy = LocalDate.now();
-        LocalDate aumento = fechaHoy.plusMonths(2);
+      //Crear usuarios
+      Usuario admin = new Usuario("admin", "0", "admin@admin.com", "admin", "admin", TipoUsuario.ADMINISTRADOR);
+      Usuario user1 = new Usuario("Juan Ignacio Duhalde", "34851803", "jduhalde@gmail.com", "jduhalde", "Juan1234", TipoUsuario.USUARIO);
+      Usuario user2 = new Usuario("Emanuel Peral", "36382541", "emaperal@gmail.com", "eperal", "123456", TipoUsuario.USUARIO);
 
-        //convertir string to LocalDate
-        String fecha = fechaHoy.toString();
-        LocalDate date = LocalDate.parse(fecha);
-        System.out.println(date);
+      //Obtener fechas
+      LocalDate fechaHoy = LocalDate.now();
+      LocalDate aumento = fechaHoy.plusMonths(2);
 
-        Servicio monitoreo = new Servicio(1500,false,"Monitoreo");
-        Servicio instalacion = new Servicio(3800,false,"Instalación");
-        CategoriaDescuento cat1 = new CategoriaDescuento("cat 1",15);
-        CategoriaDescuento cat2 = new CategoriaDescuento("cat 2",20);
+      //convertir string to LocalDate
+      String fecha = fechaHoy.toString();
+      LocalDate date = LocalDate.parse(fecha);
+      System.out.println(date);
 
-        Cuenta cta1 = new Cuenta("Roldan 557",monitoreo,cat1,fechaHoy.toString(),aumento.toString());
-        Cuenta cta2 = new Cuenta("Zacagnini 4505",instalacion,cat2,fechaHoy.toString(),aumento.toString());
+      //Crear Servicios
+      Servicio monitoreo = new Servicio(1500, false, "Monitoreo");
+      Servicio instalacion = new Servicio(3800, false, "Instalación");
 
-        c1.agregarCuenta(cta1);
-        c1.agregarCuenta(cta2);
+      //Crear categoria de descuentos
+      CategoriaDescuento cat1 = new CategoriaDescuento("cat 1", 15);
+      CategoriaDescuento cat2 = new CategoriaDescuento("cat 2", 20);
 
-        Controlador cont = new Controlador();
-        Coleccion<Cliente> coleccionClientes = new Coleccion<Cliente>();
-        Coleccion<Usuario> coleccionUsuarios= new Coleccion<Usuario>();;
-        Coleccion<Servicio> coleccionServicios= new Coleccion<Servicio>();;
+      //Creamos las cuentas
+      Cuenta cta1 = new Cuenta("Roldan 557", monitoreo, cat1, fechaHoy.toString(), aumento.toString());
+      Cuenta cta2 = new Cuenta("Zacagnini 4505", instalacion, cat2, fechaHoy.toString(), aumento.toString());
+
+      //agregamos cuentas a cliente
+      c1.agregarCuenta(cta1);
+      c1.agregarCuenta(cta2);
+
+      //Creamos el controlador de archivos
+      Controlador cont = new Controlador();
+
+      //Creacion de la colecciones
+      Coleccion<Cliente> coleccionClientes = new Coleccion<Cliente>();
+      Coleccion<Usuario> coleccionUsuarios= new Coleccion<Usuario>();
+      Coleccion<Servicio> coleccionServicios= new Coleccion<Servicio>();
 
 
-        coleccionClientes.agregar(c1);
-        coleccionClientes.agregar(c2);
-        cont.actualizarArchivoClientes(coleccionClientes);
+      //agregamos clientes a la coleccion
+      coleccionClientes.agregar(c1);
+      coleccionClientes.agregar(c2);
 
-        coleccionUsuarios.agregar(admin);
-        coleccionUsuarios.agregar(user1);
-        cont.actualizarArchivoUsuarios(coleccionUsuarios);
+      //crea archivo clientes
+      cont.actualizarArchivoClientes(coleccionClientes);
 
-        coleccionServicios.agregar(monitoreo);
-        coleccionServicios.agregar(instalacion);
-        cont.actualizarArchivoServicios(coleccionServicios);
+      //agregamos usuarios a la coleccion
+      coleccionUsuarios.agregar(admin);
+      coleccionUsuarios.agregar(user1);
+      coleccionUsuarios.agregar(user2);
+
+      //creamos archivo usuarios
+      cont.actualizarArchivoUsuarios(coleccionUsuarios);
+
+      //agregamos servicios a la coleccion
+      coleccionServicios.agregar(monitoreo);
+      coleccionServicios.agregar(instalacion);
+
+      //creamos archivo servicios
+      cont.actualizarArchivoServicios(coleccionServicios);
     }
 }

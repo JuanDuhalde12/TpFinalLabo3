@@ -25,7 +25,6 @@ public class ArchivoCliente implements Serializable {
     public ArchivoCliente(){
         gson = new Gson();
         file = new File("Archivos/clientes.json");
-
     }
 
     public void crearArchivo(ArrayList<Cliente> listaClientes) {
@@ -33,7 +32,6 @@ public class ArchivoCliente implements Serializable {
         if(!listaClientes.isEmpty()){
                 try {
                     writer = new FileWriter(file);
-                    gson = new Gson();
                     gson.toJson(listaClientes, writer);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -53,7 +51,6 @@ public class ArchivoCliente implements Serializable {
         if(file.exists()){
             try{
                 reader = new FileReader(file);
-                gson = new Gson();
                 Type clienteListType = new TypeToken<ArrayList<Cliente>>() {}.getType();
                 listaClientes = gson.fromJson(reader, clienteListType);
             }catch (IOException e) {

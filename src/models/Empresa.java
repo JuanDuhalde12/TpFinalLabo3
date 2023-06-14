@@ -92,6 +92,12 @@ public class Empresa {
         this.servicios = servicios;
     }
 
+    public void actualizarArchivos(){
+        controladorArchivos.actualizarArchivoServicios(this.servicios);
+        controladorArchivos.actualizarArchivoClientes(this.clientes);
+        controladorArchivos.actualizarArchivoUsuarios(this.usuarios);
+    }
+
     public Usuario buscarUsuario(String nombre , String contraseña) throws LoginException{
         ArrayList<Usuario> lista = usuarios.getLista();
         Usuario buscado = null;
@@ -103,6 +109,36 @@ public class Empresa {
             }
         }
         return buscado;
+    }
+
+    public Cliente buscarClienteXDni(String dni){
+        ArrayList<Cliente> lista = clientes.getLista();
+        Cliente buscado = null;
+        if(!dni.isEmpty()){
+            for(Cliente c:lista){
+                if (c.getDni().equals(dni)) {
+                    buscado = c;
+                }
+            }
+        }
+        return buscado;
+    }
+
+    public Cliente buscarClienteXDomicilio(String domicilio){
+        ArrayList<Cliente> lista = clientes.getLista();
+        Cliente buscado = null;
+        if(!domicilio.isEmpty()){
+            for(Cliente c:lista){
+                if (c.getDomicilio().equals(domicilio)) {
+                    buscado = c;
+                }
+            }
+        }
+        return buscado;
+    }
+
+    public void agregarCliente(Cliente cliente){
+        this.clientes.agregar(cliente);
     }
 
     @Override

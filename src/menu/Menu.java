@@ -49,12 +49,16 @@ public class Menu {
                             System.out.println("Bienvenido al sistema "+this.usuario.getNombre());
                         }
                     }catch(LoginException e){
-                        System.out.println(e.toString());
+                        System.out.println(e.getMessage());
                     }
 
                     break;
+                default:
+                    System.out.println("Cerrando sistema....");
+                    System.out.println("Actualizando archivos...");
+                    empresa.actualizarArchivos();
+                    break;
             }
         }while(opcion!=0);
-
     }
 }
