@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cliente extends Persona {
-    private static int id = 0;
+    private static int count = 0;
+    private int id;
     private String telefono, domicilio, ocupacion;
     private List<Cuenta> listaCuentas;
 
 
     public Cliente(String nombreCompleto, String dni, String email, String telefono, String domicilio, String ocupacion) {
         super(nombreCompleto, dni, email);
+        this.id = count++;
         this.telefono = telefono;
         this.domicilio = domicilio;
         this.ocupacion = ocupacion;
@@ -20,12 +22,12 @@ public class Cliente extends Persona {
     public Cliente() {
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
-    public static void setId(int id) {
-        Cliente.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTelefono() {
