@@ -2,12 +2,15 @@ package models;
 
 
 public class Servicio {
-    private static int id = 0;
+    private static int cont = 0;
+
+    private int id;
     private String nombreServicio;
     private double precio;
     private boolean isComodato;
 
     public Servicio(double precio, boolean isComodato, String nombreServicio) {
+        this.id = cont++;
         this.precio = precio;
         this.isComodato = isComodato;
         this.nombreServicio = nombreServicio;
@@ -24,12 +27,12 @@ public class Servicio {
         this.nombreServicio = nombreServicio;
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
-    public static void setId(int id) {
-        Servicio.id = id;
+    public  void setId(int id) {
+        this.id = id;
     }
 
     public double getPrecio() {

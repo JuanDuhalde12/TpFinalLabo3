@@ -1,1 +1,1 @@
-[{"nombreServicio":"Monitoreo","precio":1500.0,"isComodato":false},{"nombreServicio":"Instalación","precio":3800.0,"isComodato":false}]
+[{"id":0,"nombreServicio":"Monitoreo","precio":1500.0,"isComodato":false},{"id":1,"nombreServicio":"Instalación","precio":3800.0,"isComodato":false}]

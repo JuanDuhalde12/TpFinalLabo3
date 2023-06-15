@@ -142,6 +142,28 @@ public class Empresa {
         this.clientes.agregar(cliente);
     }
 
+    public void listarClientes(){
+        clientes.listar();
+    }
+
+    public void listarServicios(){
+        servicios.listar();
+    }
+
+    public void listarUsuarios(){
+        usuarios.listar();
+    }
+
+    public Servicio buscarServicio(String nombreServicio){
+        Servicio buscado = null;
+        for (Servicio s:servicios.getLista()) {
+            if(s.getNombreServicio().equals(nombreServicio)){
+                buscado = s;
+            }
+        }
+        return buscado;
+    }
+
     @Override
     public String toString() {
         return "Empresa{ id= " + id +

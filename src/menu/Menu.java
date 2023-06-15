@@ -1,15 +1,14 @@
 package menu;
 
 import Exceptions.LoginException;
-import models.Cliente;
-import models.Empresa;
-import models.TipoUsuario;
-import models.Usuario;
+import models.*;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.Console;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
@@ -144,7 +143,7 @@ public class Menu {
                     break;
                 case 2:
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-                    System.out.println(empresa.getClientes());
+                    empresa.listarClientes();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     do{
                         System.out.println("Ingrese Dni cliente a modificar");
@@ -246,7 +245,7 @@ public class Menu {
                     buscado.setOcupacion(nuevoOcupacion);
                     break;
                 case 5:
-                    //ingresar menu Cuenta
+                    menuCuenta(buscado);
                     break;
                 default:
                     System.out.println("Comando no valido");
@@ -256,6 +255,26 @@ public class Menu {
         }while(opcion!=0);
     }
 
+    public void menuCuenta(Cliente c){
+        Cuenta nuevaCuenta = new Cuenta();
+        System.out.println("Cuentas de "+ c.getNombreCompleto());
+        c.listarCuentas();
+        System.out.println("Ingrese domicilio de la cuenta: ");
+        String domicilio = scan.nextLine();
+        System.out.println("Ingrese Fecha Alta (aaaa-MM-dd) ejemplo "+ LocalDate.now());
+        String fechaAlta = scan.nextLine();
+        LocalDate date = LocalDate.parse(fechaAlta);
+        LocalDate fechaAumento = date.plusMonths(2);
+        System.out.println("Servicios: ");
+        empresa.listarServicios();
+        Servicio servicio = null;
+        do{
+            System.out.println("Ingreser nombre servicio a agregar: ");
+            String nombreServicio = scan.nextLine();
+            servicio = empresa.buscarServicio(nombreServicio);
+        }while(servicio!=null);
+        //parte listar categorias..
 
+    }
 
 }
