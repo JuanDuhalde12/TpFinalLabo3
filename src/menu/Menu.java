@@ -31,7 +31,7 @@ public class Menu {
         this.usuario = usuario;
     }
 
-    public void iniciar(){
+    public void menuInicio(){
         int opcion;
         do {
             System.out.println("Bienvenido al sistema");
@@ -82,7 +82,7 @@ public class Menu {
 
             switch (opcion){
                 case 0:
-                    iniciar();
+                    menuInicio();
                     break;
                 case 1:
                     menuClientes();
@@ -96,7 +96,26 @@ public class Menu {
     }
 
     public void menuInicioUser(){
+        int opcion,p;
+        do {
+            System.out.println("Bienvenido al sistema");
+            System.out.println("1. Menu Cliente");
+            System.out.println("2. Menu Servicios");
+            System.out.println("0. Volver");
+            opcion = scan.nextInt();
+            scan.nextLine();
 
+            switch(opcion){
+                case 0:
+                    menuInicio();
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+
+            }
+        }while(opcion!=0);
     }
 
     public void menuClientes(){
@@ -124,7 +143,7 @@ public class Menu {
 
             switch (opcion){
                 case 0:
-                    iniciar();
+                    menuInicio();
                     break;
                 case 1:
                     do{
@@ -274,7 +293,10 @@ public class Menu {
             servicio = empresa.buscarServicio(nombreServicio);
         }while(servicio!=null);
         //parte listar categorias..
-
+        nuevaCuenta.setDomicilioServicio(domicilio);
+        nuevaCuenta.setFechaAlta(fechaAlta);
+        nuevaCuenta.setFechaAumento(fechaAumento.toString());
+        nuevaCuenta.setServicio(servicio);
     }
 
 }

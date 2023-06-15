@@ -16,7 +16,7 @@ public class Main {
       comenzar();
 
        /*Menu menu = new Menu();
-       menu.iniciar();*/
+       menu.menuInicio();*/
 
 
     }
