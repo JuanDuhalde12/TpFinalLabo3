@@ -1,13 +1,15 @@
 package models;
 
 public class Cuenta {
-    private static int nroCuenta = 0;
+    private static int count = 0;
+    private int nroCuenta;
     private String domicilioServicio;
     private Servicio servicio;
     private String fechaAlta,fechaAumento;
     private CategoriaDescuento categoria;
 
     public Cuenta(String domicilioServicio, Servicio servicio, CategoriaDescuento categoria, String fechaAlta, String fechaAumento) {
+        this.nroCuenta = count++;
         this.domicilioServicio = domicilioServicio;
         this.servicio = servicio;
         this.categoria = categoria;
@@ -34,12 +36,12 @@ public class Cuenta {
         this.fechaAumento = fechaAumento;
     }
 
-    public static int getNroCuenta() {
+    public int getNroCuenta() {
         return nroCuenta;
     }
 
-    public static void setNroCuenta(int nroCuenta) {
-        Cuenta.nroCuenta = nroCuenta;
+    public void setNroCuenta(int nroCuenta) {
+        this.nroCuenta = nroCuenta;
     }
 
     public String getDomicilioServicio() {
