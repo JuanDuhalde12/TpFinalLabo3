@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import models.*;
 
-public class ArchivoUsuario {
+public class ArchivoUsuario implements Serializable{
     private Gson gson;
     private File file;
 

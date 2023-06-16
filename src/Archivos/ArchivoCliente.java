@@ -63,7 +63,7 @@ public class ArchivoCliente implements Serializable {
                 }
             }
         }else{
-            System.out.println("El archivo usuarios.json no existe");
+            System.out.println("El archivo Cliente.json no existe");
         }
         return listaClientes;
     }
