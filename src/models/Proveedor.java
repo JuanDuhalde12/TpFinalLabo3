@@ -4,22 +4,21 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Proveedor {
-    private static int id = 0;
+    private static int cont = 0;
 
+    private int id;
     private String nombre, claveOperador;
-    private HashMap <Integer, Cuenta> cuentas;
 
     public Proveedor() {
     }
 
     public Proveedor(String nombre, String claveOperador) {
-        this.id++;
+        this.id = cont++;
         this.nombre = nombre;
         this.claveOperador = claveOperador;
-        this.cuentas = new HashMap<>();
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
@@ -39,13 +38,6 @@ public class Proveedor {
         this.claveOperador = claveOperador;
     }
 
-    public void agregarCuentaAProveedor(Integer clave, Cuenta cuenta){
-        cuentas.put(clave, cuenta);
-    }
-
-    public void listarCuentasProveedor(){
-        cuentas.entrySet();
-    }
 
     @Override
     public String toString() {

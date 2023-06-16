@@ -2,27 +2,28 @@ package Archivos;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import models.Servicio;
+import models.CategoriaDescuento;
+import models.Proveedor;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class ArchivoServicio implements Serializable {
+public class ArchivoCategoriaDesc implements Serializable {
     private Gson gson;
     private File file;
 
-    public ArchivoServicio(){
+    public ArchivoCategoriaDesc(){
         gson = new Gson();
-        file = new File("Archivos/servicios.json");
+        file = new File("Archivos/categoriadesc.json");
     }
 
-    public void crearArchivo(ArrayList<Servicio> listaServicios) {
+    public void crearArchivo(ArrayList<CategoriaDescuento> listaCategoriasDesc) {
         FileWriter writer = null;
-        if(!listaServicios.isEmpty()){
+        if(!listaCategoriasDesc.isEmpty()){
             try {
                 writer = new FileWriter(file);
-                gson.toJson(listaServicios, writer);
+                gson.toJson(listaCategoriasDesc, writer);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -35,14 +36,14 @@ public class ArchivoServicio implements Serializable {
         }
     }
 
-    public ArrayList<Servicio> leerArchivo(){
+    public ArrayList<CategoriaDescuento> leerArchivo(){
         FileReader reader = null;
-        ArrayList<Servicio> lista = null;
+        ArrayList<CategoriaDescuento> listaCategoriaDesc = null;
         if(file.exists()){
             try{
                 reader = new FileReader(file);
-                Type clienteListType = new TypeToken<ArrayList<Servicio>>() {}.getType();
-                lista = gson.fromJson(reader, clienteListType);
+                Type categoriaDescListType = new TypeToken<ArrayList<Proveedor>>() {}.getType();
+                listaCategoriaDesc = gson.fromJson(reader, categoriaDescListType);
             }catch (IOException e) {
                 e.printStackTrace();
             }finally {
@@ -53,9 +54,9 @@ public class ArchivoServicio implements Serializable {
                 }
             }
         }else{
-            System.out.println("El archivo servicios.json no existe");
+            System.out.println("El archivo categoriadesc.json no existe");
         }
-        return lista;
+        return listaCategoriaDesc;
     }
 
 }

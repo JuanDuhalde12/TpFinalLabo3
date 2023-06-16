@@ -2,27 +2,29 @@ package Archivos;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import models.Servicio;
+import models.Cuenta;
+import models.Proveedor;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class ArchivoServicio implements Serializable {
+public class ArchivoProveedor implements Serializable {
     private Gson gson;
     private File file;
 
-    public ArchivoServicio(){
+    public ArchivoProveedor(){
         gson = new Gson();
-        file = new File("Archivos/servicios.json");
+        file = new File("Archivos/proveedores.json");
     }
 
-    public void crearArchivo(ArrayList<Servicio> listaServicios) {
+    public void crearArchivo(HashMap<Integer, Proveedor> listaProveedores) {
         FileWriter writer = null;
-        if(!listaServicios.isEmpty()){
+        if(!listaProveedores.isEmpty()){
             try {
                 writer = new FileWriter(file);
-                gson.toJson(listaServicios, writer);
+                gson.toJson(listaProveedores, writer);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -35,14 +37,14 @@ public class ArchivoServicio implements Serializable {
         }
     }
 
-    public ArrayList<Servicio> leerArchivo(){
+    public HashMap<Integer, Proveedor> leerArchivo(){
         FileReader reader = null;
-        ArrayList<Servicio> lista = null;
+        HashMap<Integer, Proveedor> listaProveedores = null;
         if(file.exists()){
             try{
                 reader = new FileReader(file);
-                Type clienteListType = new TypeToken<ArrayList<Servicio>>() {}.getType();
-                lista = gson.fromJson(reader, clienteListType);
+                Type proveedorListType = new TypeToken<HashMap<Integer, Proveedor>>() {}.getType();
+                listaProveedores = gson.fromJson(reader, proveedorListType);
             }catch (IOException e) {
                 e.printStackTrace();
             }finally {
@@ -53,9 +55,9 @@ public class ArchivoServicio implements Serializable {
                 }
             }
         }else{
-            System.out.println("El archivo servicios.json no existe");
+            System.out.println("El archivo Proveedores.json no existe");
         }
-        return lista;
+        return listaProveedores;
     }
 
 }

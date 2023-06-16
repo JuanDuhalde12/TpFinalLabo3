@@ -1,21 +1,24 @@
 package Archivos;
 
 import Coleccion.Coleccion;
-import models.Cliente;
-import models.Servicio;
-import models.Usuario;
+import models.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Controlador {
     private ArchivoServicio servicios;
     private ArchivoCliente clientes;
     private ArchivoUsuario usuarios;
+    private ArchivoCategoriaDesc categoriaDesc;
+    private ArchivoProveedor proveedores;
 
     public Controlador() {
         this.servicios = new ArchivoServicio();
         this.clientes = new ArchivoCliente();
         this.usuarios = new ArchivoUsuario();
+        this.categoriaDesc = new ArchivoCategoriaDesc();
+        this.proveedores = new ArchivoProveedor();
     }
 
     public ArrayList<Cliente> obtenerClientes(){
@@ -33,6 +36,16 @@ public class Controlador {
     public ArrayList<Servicio> obtenerServicios(){
         ArrayList<Servicio> lista = new ArrayList<>();
         lista = servicios.leerArchivo();
+        return  lista;
+    }
+    public ArrayList<CategoriaDescuento> obtenerCategoriaDesc(){
+        ArrayList<CategoriaDescuento> lista = new ArrayList<>();
+        lista = categoriaDesc.leerArchivo();
+        return  lista;
+    }
+    public HashMap<Integer, Proveedor> obtenerProveedores(){
+        HashMap<Integer, Proveedor> lista = new HashMap<>();
+        lista = proveedores.leerArchivo();
         return  lista;
     }
 
