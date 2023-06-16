@@ -7,17 +7,10 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class ListaProveedor implements Serializable {
-    private HashMap<Integer, Proveedor> ListaProveedores;
+    private HashMap<Integer, Proveedor> listaProveedores;
 
     public ListaProveedor(HashMap<Integer, Proveedor> listaProveedores) {
-        ListaProveedores = new HashMap<>();
+        this.listaProveedores = new HashMap<>();
     }
 
-    public HashMap<Integer, Proveedor> getListaProveedores() {
-        return ListaProveedores;
-    }
-
-    public void setListaProveedores(HashMap<Integer, Proveedor> listaProveedores) {
-        ListaProveedores = listaProveedores;
-    }
 }
