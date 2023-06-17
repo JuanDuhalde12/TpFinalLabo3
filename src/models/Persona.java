@@ -2,16 +2,21 @@ package models;
 
 public class Persona {
     private String nombreCompleto, dni, email;
+    private boolean isActive;
 
     public Persona(String nombreCompleto, String dni, String email) {
         this.nombreCompleto = nombreCompleto;
         this.dni = dni;
         this.email = email;
+        this.isActive = true;
     }
 
     public Persona() {
+        this.isActive = true;
     }
 
+    public boolean getIsActive(){return isActive;}
+    public void setNotActive(){this.isActive=false;}
     public String getNombreCompleto() {
         return nombreCompleto;
     }

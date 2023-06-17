@@ -3,7 +3,7 @@ package models;
 
 public class Servicio {
     private static int cont = 0;
-
+    private boolean isActive;
     private int id;
     private String nombreServicio;
     private double precio;
@@ -14,6 +14,7 @@ public class Servicio {
         this.precio = precio;
         this.isComodato = isComodato;
         this.nombreServicio = nombreServicio;
+        this.isActive = true;
     }
 
     public Servicio() {
@@ -27,6 +28,8 @@ public class Servicio {
         this.nombreServicio = nombreServicio;
     }
 
+    public boolean getIsActive(){return isActive;}
+    public void setNotActive(){this.isActive=false;}
     public int getId() {
         return id;
     }

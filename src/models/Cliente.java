@@ -19,7 +19,10 @@ public class Cliente extends Persona {
         this.listaCuentas = new ArrayList<>();
     }
 
-    public Cliente() {
+    public Cliente(int id) {
+        super();
+        this.id=id;
+        this.listaCuentas = new ArrayList<>();
     }
 
     public int getId() {
@@ -62,6 +65,10 @@ public class Cliente extends Persona {
         }
     }
 
+    public int getUltimoIdCuenta(){
+        return this.listaCuentas.size();
+    }
+
     public void agregarCuenta(Cuenta cuenta){
         listaCuentas.add(cuenta);
     }
@@ -75,9 +82,9 @@ public class Cliente extends Persona {
     @Override
     public String toString() {
         return  super.toString() +
-                ", telefono='" + telefono + '\'' +
-                ", domicilio='" + domicilio + '\'' +
-                ", ocupacion='" + ocupacion + '\'' +
-                ", listaCuentas=" + listaCuentas ;
+                ", telefono= " + telefono  +
+                ", domicilio= " + domicilio  +
+                ", ocupacion= " + ocupacion +
+                ", Cantidad de cuentas= " + listaCuentas.size() ;
     }
 }
