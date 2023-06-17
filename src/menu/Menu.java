@@ -41,6 +41,12 @@ public class Menu {
             scan.nextLine();
 
             switch (opcion){
+                case 0:
+                    System.out.println("Cerrando sistema....");
+                    System.out.println("Actualizando archivos...");
+                    empresa.actualizarArchivos();
+                    System.exit(0);
+                    break;
                 case 1:
                     System.out.println("Usuario: ");
                     String usuario = scan.nextLine();
@@ -50,9 +56,9 @@ public class Menu {
                         this.usuario = empresa.buscarUsuario(usuario,contraseña);
                         if(usuario != null){
                             if(this.usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
-                                menuInicioAdmin();
+                                menuAdmin();
                             }else{
-                                menuInicioUser();
+                                menuUser();
                             }
                         }
                     }catch(LoginException e){
@@ -61,21 +67,21 @@ public class Menu {
 
                     break;
                 default:
-                    System.out.println("Cerrando sistema....");
-                    System.out.println("Actualizando archivos...");
-                    empresa.actualizarArchivos();
+                    System.out.println("Comando Invalido");
                     break;
             }
         }while(opcion!=0);
     }
 
-    public void menuInicioAdmin(){
+    public void menuAdmin(){
         int opcion;
         do {
             System.out.println("Bienvenido al sistema");
-            System.out.println("1. Menu Cliente");
-            System.out.println("2. Menu Usuario");
-            System.out.println("3. Menu Servicios");
+            System.out.println("1. Cliente");
+            System.out.println("2. Servicios");
+            System.out.println("3. Categoria Descuento");
+            System.out.println("4. Proveedores");
+            System.out.println("5. Usuario");
             System.out.println("0. Volver");
             opcion = scan.nextInt();
             scan.nextLine();
@@ -87,6 +93,14 @@ public class Menu {
                 case 1:
                     menuClientes();
                     break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
                 default:
                     System.out.println("Comando no valido");
                     break;
@@ -95,12 +109,14 @@ public class Menu {
 
     }
 
-    public void menuInicioUser(){
+    public void menuUser(){
         int opcion,p;
         do {
             System.out.println("Bienvenido al sistema");
-            System.out.println("1. Menu Cliente");
-            System.out.println("2. Menu Servicios");
+            System.out.println("1. Cliente");
+            System.out.println("2. Servicios");
+            System.out.println("3. Categoria Descuento");
+            System.out.println("4. Proveedores");
             System.out.println("0. Volver");
             opcion = scan.nextInt();
             scan.nextLine();
@@ -110,8 +126,18 @@ public class Menu {
                     menuInicio();
                     break;
                 case 1:
+                    menuClientes();
                     break;
                 case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                default:
+                    System.out.println("Comando no valido");
                     break;
 
             }
@@ -180,11 +206,11 @@ public class Menu {
                     }while(p!=0);
                     break;
                 case 3:
-                    Cliente cliente = crearCliente();
-                    empresa.agregarCliente(cliente);
+                    crearCliente();
                     System.out.println("Cliente agregado");
                     break;
                 case 4:
+                    //Completar eliminar cliente
                     break;
                 default:
                     System.out.println("Comando no valido");
@@ -194,9 +220,10 @@ public class Menu {
 
     }
 
-    public Cliente crearCliente(){
+    public void crearCliente(){
         int opcion;
-        Cliente cliente = new Cliente();
+        empresa.getUltimosIds();
+        Cliente cliente = new Cliente(empresa.getIdCliente());
         do{
             System.out.println("Creacion cliente");
             System.out.println("Ingrese Nombre Completo:");
@@ -211,15 +238,19 @@ public class Menu {
             System.out.println("Ingrese Ocupacion:");
             String ocupacion = scan.nextLine();
             cliente.setOcupacion(ocupacion);
+            System.out.println("Ingrese Email: ");
+            String email = scan.nextLine();
+            cliente.setEmail(email);
+            System.out.println("Ingrese Telefono: ");
+            String tel = scan.nextLine();
+            cliente.setTelefono(tel);
             System.out.println("Cliente creado: ");
             System.out.println(cliente.toString());
             System.out.println("Presione 0 para aceptar");
             opcion = scan.nextInt();
             scan.nextLine();
         }while(opcion!=0);
-
-
-        return cliente;
+        empresa.agregarCliente(cliente);
     }
 
     public void modificarCliente(Cliente buscado){
@@ -264,7 +295,7 @@ public class Menu {
                     buscado.setOcupacion(nuevoOcupacion);
                     break;
                 case 5:
-                    menuCuenta(buscado);
+                    crearCuenta(buscado);
                     break;
                 default:
                     System.out.println("Comando no valido");
@@ -274,29 +305,66 @@ public class Menu {
         }while(opcion!=0);
     }
 
-    public void menuCuenta(Cliente c){
-        Cuenta nuevaCuenta = new Cuenta();
-        System.out.println("Cuentas de "+ c.getNombreCompleto());
-        c.listarCuentas();
-        System.out.println("Ingrese domicilio de la cuenta: ");
-        String domicilio = scan.nextLine();
-        System.out.println("Ingrese Fecha Alta (aaaa-MM-dd) ejemplo "+ LocalDate.now());
-        String fechaAlta = scan.nextLine();
-        LocalDate date = LocalDate.parse(fechaAlta);
-        LocalDate fechaAumento = date.plusMonths(2);
-        System.out.println("Servicios: ");
-        empresa.listarServicios();
-        Servicio servicio = null;
+    public void crearCuenta(Cliente c){
+        int opcion;
+        Cuenta nuevaCuenta = new Cuenta(c.getId(),c.getUltimoIdCuenta());
         do{
-            System.out.println("Ingreser nombre servicio a agregar: ");
-            String nombreServicio = scan.nextLine();
-            servicio = empresa.buscarServicio(nombreServicio);
-        }while(servicio!=null);
-        //parte listar categorias..
-        nuevaCuenta.setDomicilioServicio(domicilio);
-        nuevaCuenta.setFechaAlta(fechaAlta);
-        nuevaCuenta.setFechaAumento(fechaAumento.toString());
-        nuevaCuenta.setServicio(servicio);
+            System.out.println("Cuentas de "+ c.getNombreCompleto());
+            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+            c.listarCuentas();
+            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+            System.out.println("Ingrese domicilio de la cuenta: ");
+            String domicilio = scan.nextLine();
+            System.out.println("Ingrese Fecha Alta (aaaa-MM-dd) ejemplo "+ LocalDate.now());
+            String fechaAlta = scan.nextLine();
+            LocalDate date = LocalDate.parse(fechaAlta);
+            LocalDate fechaAumento = date.plusMonths(2);
+            System.out.println("Servicios: ");
+            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+            empresa.listarServicios();
+            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+            Servicio servicio = null;
+            Proveedor proveedor = null;
+            do{
+                System.out.println("Ingreser nombre servicio a agregar: ");
+                String nombreServicio = scan.nextLine();
+                servicio = empresa.buscarServicio(nombreServicio);
+                if(servicio.getNombreServicio().equals("Monitoreo")){
+                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    empresa.listarProveedores();
+                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    do{
+                        System.out.println("Ingreser nombre proveedor: ");
+                        String nombreProveedor = scan.nextLine();
+                        proveedor = empresa.buscarProveedor(nombreProveedor);
+                        nuevaCuenta.setNombreProveedor(proveedor.getNombre());
+                    }while(proveedor==null);
+                }
+            }while(servicio==null);
+            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+            empresa.listarCategoriasDesc();
+            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+            CategoriaDescuento categoriaDescuento = null;
+            do{
+                System.out.println("Ingreser nombre servicio a agregar: ");
+                String nombreCatDesc = scan.nextLine();
+                categoriaDescuento = empresa.buscarCatDesc(nombreCatDesc);
+            }while(categoriaDescuento==null);
+            System.out.println("Ingrese clave operador: ");
+            String claveOperador = scan.nextLine();
+            nuevaCuenta.setClaveOperador(claveOperador);
+            nuevaCuenta.setDomicilioServicio(domicilio);
+            nuevaCuenta.setFechaAlta(fechaAlta);
+            nuevaCuenta.setFechaAumento(fechaAumento.toString());
+            nuevaCuenta.setServicio(servicio);
+            nuevaCuenta.setCategoria(categoriaDescuento);
+            System.out.println("Cliente creado: ");
+            System.out.println(nuevaCuenta.toString());
+            System.out.println("Presione 0 para aceptar");
+            opcion = scan.nextInt();
+            scan.nextLine();
+        }while(opcion!=0);
+        c.agregarCuenta(nuevaCuenta);
     }
 
 }
