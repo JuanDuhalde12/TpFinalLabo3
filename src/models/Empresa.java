@@ -1,18 +1,22 @@
 package models;
 
 import Archivos.Controlador;
-import Coleccion.Coleccion;
+import Coleccion.*;
 import Exceptions.LoginException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Empresa {
     private static int id = 0;
     private String telefono,email,domicilio,cuit;
     private Coleccion<Cliente> clientes = new Coleccion<Cliente>();
-    private Coleccion<Usuario> usuarios = new Coleccion<Usuario>();;
-    private Coleccion<Servicio> servicios = new Coleccion<Servicio>();;
+    private Coleccion<Usuario> usuarios = new Coleccion<Usuario>();
+    private Coleccion<Servicio> servicios = new Coleccion<Servicio>();
+    private Coleccion<CategoriaDescuento> categoriaDesc = new Coleccion<CategoriaDescuento>();
+    private ListaProveedor proveedores = new ListaProveedor();
     private Controlador controladorArchivos;
 
 
@@ -26,6 +30,8 @@ public class Empresa {
         this.clientes.setLista(controladorArchivos.obtenerClientes());
         this.usuarios.setLista(controladorArchivos.obtenerUsuarios());
         this.servicios.setLista(controladorArchivos.obtenerServicios());
+        this.proveedores.setLista(controladorArchivos.obtenerProveedores());
+        this.categoriaDesc.setLista(controladorArchivos.obtenerCategoriaDesc());
     }
 
     public Empresa() {
@@ -137,6 +143,18 @@ public class Empresa {
         }
         return buscado;
     }
+    public Cliente buscarClienteXNombre(String Nombre){
+        ArrayList<Cliente> lista = clientes.getLista();
+        Cliente buscado = null;
+        if(!domicilio.isEmpty()){
+            for(Cliente c:lista){
+                if (c.getDomicilio().equals(domicilio)) {
+                    buscado = c;
+                }
+            }
+        }
+        return buscado;
+    }
 
     public void agregarCliente(Cliente cliente){
         this.clientes.agregar(cliente);
@@ -172,5 +190,41 @@ public class Empresa {
                 ", domicilio='" + domicilio + '\'' +
                 ", cuit='" + cuit + '\'' +
                 '}';
+    }
+
+    public int ultimoIdClientes(){
+        int id = 0;
+        if(!clientes.getLista().isEmpty()){
+            for (Cliente cliente : clientes.getLista()){
+                if(id<cliente.getId()){
+                    id=cliente.getId();
+                }
+            }
+        }
+        return id;
+    }
+
+    public int ultimoIdServicios(){
+        int id = 0;
+        if(!servicios.getLista().isEmpty()){
+            for (Servicio servicio : servicios.getLista()){
+                if(id<servicio.getId()){
+                    id=servicio.getId();
+                }
+            }
+        }
+        return id;
+    }
+
+    public Integer ultimoIdProveedores(){
+        Integer id = 0;
+        if(!proveedores.getLista().isEmpty()){
+            for (Map.Entry<Integer, Proveedor> entry : proveedores.getLista().entrySet()) {
+                if(id<entry.getKey()){
+                    id=entry.getKey();
+                }
+            }
+        }
+        return id;
     }
 }

@@ -1,6 +1,6 @@
 package Archivos;
 
-import Coleccion.Coleccion;
+import Coleccion.*;
 import models.*;
 
 import java.io.Serializable;
@@ -68,8 +68,8 @@ public class Controlador {
         ArrayList<CategoriaDescuento> lista = coleccion.getLista();
         categoriaDesc.crearArchivo(lista);
     }
-    public void actualizarArchivoProveedores(ListaProveedor<Integer, Proveedor> coleccion){
-        HashMap<Integer, Proveedor> lista = coleccion.;
+    public void actualizarArchivoProveedores(ListaProveedor listaProveedor){
+        HashMap<Integer, Proveedor> lista = listaProveedor.getLista();
         proveedores.crearArchivo(lista);
     }
 }
