@@ -2,7 +2,6 @@ package Coleccion;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Coleccion <T> implements Serializable {
     private ArrayList<T> lista;
@@ -38,4 +37,5 @@ public class Coleccion <T> implements Serializable {
             System.out.println(t.toString());
         }
     }
+
 }

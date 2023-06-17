@@ -12,6 +12,8 @@ public class CategoriaDescuento {
     public CategoriaDescuento() {
     }
 
+
+
     public String getNombre() {
         return nombre;
     }
