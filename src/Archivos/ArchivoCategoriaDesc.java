@@ -42,7 +42,7 @@ public class ArchivoCategoriaDesc implements Serializable {
         if(file.exists()){
             try{
                 reader = new FileReader(file);
-                Type categoriaDescListType = new TypeToken<ArrayList<Proveedor>>() {}.getType();
+                Type categoriaDescListType = new TypeToken<ArrayList<CategoriaDescuento>>() {}.getType();
                 listaCategoriaDesc = gson.fromJson(reader, categoriaDescListType);
             }catch (IOException e) {
                 e.printStackTrace();
