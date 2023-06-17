@@ -143,12 +143,12 @@ public class Empresa {
         }
         return buscado;
     }
-    public Cliente buscarClienteXNombre(String Nombre){
+    public Cliente buscarClienteXNombre(String nombre){
         ArrayList<Cliente> lista = clientes.getLista();
         Cliente buscado = null;
-        if(!domicilio.isEmpty()){
+        if(!nombre.isEmpty()){
             for(Cliente c:lista){
-                if (c.getDomicilio().equals(domicilio)) {
+                if (c.getNombreCompleto().equals(nombre)) {
                     buscado = c;
                 }
             }
@@ -163,13 +163,17 @@ public class Empresa {
     public void listarClientes(){
         clientes.listar();
     }
-
     public void listarServicios(){
         servicios.listar();
     }
-
     public void listarUsuarios(){
         usuarios.listar();
+    }
+    public void listarProveedores(){
+        proveedores.listar();
+    }
+    public void listarCategoriaDesc(){
+        categoriaDesc.listar();
     }
 
     public Servicio buscarServicio(String nombreServicio){
