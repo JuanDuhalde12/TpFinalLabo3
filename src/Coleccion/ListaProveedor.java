@@ -13,6 +13,7 @@ import java.util.Map;
 public class ListaProveedor implements IultimoId {
     private HashMap<Integer, Proveedor> listaProveedores;
 
+
     public ListaProveedor() {
         this.listaProveedores = new HashMap<Integer,Proveedor>();
     }

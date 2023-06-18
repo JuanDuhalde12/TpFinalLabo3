@@ -146,6 +146,17 @@ public class Empresa {
         return buscado;
     }
 
+    public Usuario buscarUsuarioPorNombre(String nombre){
+        ArrayList<Usuario> lista = usuarios.getLista();
+        Usuario buscado = null;
+        for (Usuario u:lista) {
+            if(u.getNombre().equals(nombre)){
+                buscado = u;
+            }
+        }
+        return buscado;
+    }
+
     public Cliente buscarClienteXDni(String dni){
         ArrayList<Cliente> lista = clientes.getLista();
         Cliente buscado = null;
@@ -184,8 +195,35 @@ public class Empresa {
         return buscado;
     }
 
+    public Cliente buscarClienteXTelefono(String telefono){
+        ArrayList<Cliente> lista = clientes.getLista();
+        Cliente buscado = null;
+        if(!telefono.isEmpty()){
+            for(Cliente c:lista){
+                if (c.getNombreCompleto().equals(telefono)) {
+                    buscado = c;
+                }
+            }
+        }
+        return buscado;
+    }
+
     public void agregarCliente(Cliente cliente){
         this.clientes.agregar(cliente);
+    }
+
+    public void agregarServicio(Servicio servicio){
+        this.servicios.agregar(servicio);
+    }
+    public void agregarCategoriaDesc(CategoriaDescuento catDesc){
+        this.categoriaDesc.agregar(catDesc);
+    }
+    public void agregarProveedor(Proveedor proveedor){
+        this.proveedores.agregar(proveedor);
+    }
+
+    public void agregarUsuario(Usuario usuario){
+        this.usuarios.agregar(usuario);
     }
 
     public void listarClientes(){
@@ -220,12 +258,8 @@ public class Empresa {
     public void listarProveedores(){
         proveedores.listar();
     }
-    public void listarProveedores(){
-        proveedores.listar();
-    }
-    public void listarCategoriaDesc(){
-        categoriaDesc.listar();
-    }
+
+
 
     public Servicio buscarServicio(String nombreServicio){
         Servicio buscado = null;
@@ -258,6 +292,16 @@ public class Empresa {
         }
         return buscado;
     }
+
+    public void eliminarProveedor(Proveedor nombre){
+        proveedores.eliminar(nombre);
+    }
+
+    public void eliminarUsuario (Usuario nombre){
+        usuarios.eliminar(nombre);
+    }
+
+
 
     @Override
     public String toString() {

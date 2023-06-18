@@ -1,6 +1,8 @@
 package models;
 
 
+import java.util.ArrayList;
+
 public class Servicio {
     private static int cont = 0;
     private boolean isActive;
@@ -15,6 +17,11 @@ public class Servicio {
         this.isComodato = isComodato;
         this.nombreServicio = nombreServicio;
         this.isActive = true;
+    }
+
+    public Servicio(int id) {
+        super();
+        this.id=id;
     }
 
     public Servicio() {
