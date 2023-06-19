@@ -1,10 +1,6 @@
 package Coleccion;
 
 import Interfaz.IultimoId;
-import models.CategoriaDescuento;
-import models.Cliente;
-import models.Servicio;
-import models.Usuario;
 
 import java.io.Serializable;
 import java.util.ArrayList;
