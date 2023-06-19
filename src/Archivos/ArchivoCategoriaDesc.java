@@ -3,13 +3,12 @@ package Archivos;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import models.CategoriaDescuento;
-import models.Proveedor;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class ArchivoCategoriaDesc implements Serializable {
+public class ArchivoCategoriaDesc extends ArchivoArray<CategoriaDescuento> implements Serializable {
     private Gson gson;
     private File file;
 
@@ -17,7 +16,7 @@ public class ArchivoCategoriaDesc implements Serializable {
         gson = new Gson();
         file = new File("Archivos/categoriadesc.json");
     }
-
+    @Override
     public void crearArchivo(ArrayList<CategoriaDescuento> listaCategoriasDesc) {
         FileWriter writer = null;
         if(!listaCategoriasDesc.isEmpty()){
@@ -36,13 +35,14 @@ public class ArchivoCategoriaDesc implements Serializable {
         }
     }
 
+    @Override
     public ArrayList<CategoriaDescuento> leerArchivo(){
         FileReader reader = null;
         ArrayList<CategoriaDescuento> listaCategoriaDesc = null;
         if(file.exists()){
             try{
                 reader = new FileReader(file);
-                Type categoriaDescListType = new TypeToken<ArrayList<Proveedor>>() {}.getType();
+                Type categoriaDescListType = new TypeToken<ArrayList<CategoriaDescuento>>() {}.getType();
                 listaCategoriaDesc = gson.fromJson(reader, categoriaDescListType);
             }catch (IOException e) {
                 e.printStackTrace();

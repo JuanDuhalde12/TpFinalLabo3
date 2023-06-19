@@ -2,24 +2,45 @@ package models;
 
 public class Cuenta {
     private static int count = 0;
-    private int nroCuenta;
+    private String nroCuenta;
     private String domicilioServicio;
     private Servicio servicio;
     private String fechaAlta,fechaAumento;
     private CategoriaDescuento categoria;
+    private String claveOperador;
+    private Proveedor prov;
+    private boolean isActive;
 
-    public Cuenta(String domicilioServicio, Servicio servicio, CategoriaDescuento categoria, String fechaAlta, String fechaAumento) {
-        this.nroCuenta = count++;
+    public Cuenta(String domicilioServicio, Servicio servicio, CategoriaDescuento categoria, String fechaAlta, String fechaAumento, String claveOperador,Proveedor prov,int idCliente) {
+        this.nroCuenta = idCliente+"/"+count++;
         this.domicilioServicio = domicilioServicio;
         this.servicio = servicio;
         this.categoria = categoria;
         this.fechaAumento = fechaAumento;
         this.fechaAlta = fechaAlta;
+        this.claveOperador = claveOperador;
+        this.isActive = true;
+        this.prov = prov;
     }
 
-    public Cuenta() {
+    public Cuenta(int idCliente,int ultimoId) {
+        this.nroCuenta = idCliente+"/"+ultimoId;
+        this.isActive = true;
     }
 
+    public String getClaveOperador() {
+        return claveOperador;
+    }
+
+    public void setClaveOperador(String claveOperador) {
+        this.claveOperador = claveOperador;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setNotActive(){this.isActive=false;}
     public String getFechaAlta() {
         return fechaAlta;
     }
@@ -36,11 +57,11 @@ public class Cuenta {
         this.fechaAumento = fechaAumento;
     }
 
-    public int getNroCuenta() {
+    public String getNroCuenta() {
         return nroCuenta;
     }
 
-    public void setNroCuenta(int nroCuenta) {
+    public void setNroCuenta(String nroCuenta) {
         this.nroCuenta = nroCuenta;
     }
 
@@ -68,14 +89,26 @@ public class Cuenta {
         this.categoria = categoria;
     }
 
+    public Proveedor getProveedor() {
+        return prov;
+    }
+
+    public void setProveedor(String nombreProveedor) {
+        this.prov = prov;
+    }
+
+
+
     @Override
     public String toString() {
         return "Cuenta{" +
-                "domicilioServicio='" + domicilioServicio + '\'' +
+                "nroCuenta=" + nroCuenta +
+                ", domicilioServicio='" + domicilioServicio + '\'' +
                 ", servicio=" + servicio +
                 ", fechaAlta='" + fechaAlta + '\'' +
                 ", fechaAumento='" + fechaAumento + '\'' +
                 ", categoria=" + categoria +
-                '}';
+                ", claveOperador='" + claveOperador + '\'' +
+                ", nombreProveedor='" + prov + '\'';
     }
 }

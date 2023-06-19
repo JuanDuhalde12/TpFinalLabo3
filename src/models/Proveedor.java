@@ -7,19 +7,30 @@ public class Proveedor {
     private static int cont = 0;
 
     private int id;
-    private String nombre, claveOperador;
+    private String nombre,telefono;
 
     public Proveedor() {
     }
 
-    public Proveedor(String nombre, String claveOperador) {
+    public Proveedor(String nombre, String telefono) {
         this.id = cont++;
         this.nombre = nombre;
-        this.claveOperador = claveOperador;
+        this.telefono = telefono;
+    }
+    public Proveedor(int id) {
+        this.id=id;
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public String getNombre() {
@@ -30,20 +41,11 @@ public class Proveedor {
         this.nombre = nombre;
     }
 
-    public String getClaveOperador() {
-        return claveOperador;
-    }
-
-    public void setClaveOperador(String claveOperador) {
-        this.claveOperador = claveOperador;
-    }
-
-
     @Override
     public String toString() {
         return "Proveedor{" +
-                "nombre='" + nombre + '\'' +
-                ", claveOperador='" + claveOperador + '\'' +
-                '}';
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", telefono='" + telefono;
     }
 }

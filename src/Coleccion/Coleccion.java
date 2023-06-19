@@ -1,10 +1,11 @@
 package Coleccion;
 
+import Interfaz.IultimoId;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
-public class Coleccion <T> implements Serializable {
+public class Coleccion <T> implements Serializable, IultimoId {
     private ArrayList<T> lista;
 
     public Coleccion() {
@@ -23,19 +24,16 @@ public class Coleccion <T> implements Serializable {
         this.lista.add(t);
     }
 
-    public void imprimir(){
-        for (T t: lista) {
-            System.out.println(t.toString());
-        }
-    }
-
     public void eliminar(T t){
         this.lista.remove(t);
     }
 
-    public void listar(){
-        for (T t:this.lista) {
-            System.out.println(t.toString());
-        }
+    public void imprimir(T t){
+        System.out.println(t.toString());
+    }
+
+    @Override
+    public int ultimoId() {
+        return this.lista.size();
     }
 }

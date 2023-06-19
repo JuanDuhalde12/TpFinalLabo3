@@ -1,18 +1,20 @@
 package models;
 
 import Archivos.Controlador;
-import Coleccion.Coleccion;
+import Coleccion.*;
 import Exceptions.LoginException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Empresa {
     private static int id = 0;
+    private int idUsuario,idCliente,idServicio,idCatDesc,idProveedor;
     private String telefono,email,domicilio,cuit;
     private Coleccion<Cliente> clientes = new Coleccion<Cliente>();
-    private Coleccion<Usuario> usuarios = new Coleccion<Usuario>();;
-    private Coleccion<Servicio> servicios = new Coleccion<Servicio>();;
+    private Coleccion<Usuario> usuarios = new Coleccion<Usuario>();
+    private Coleccion<Servicio> servicios = new Coleccion<Servicio>();
+    private Coleccion<CategoriaDescuento> categoriaDesc = new Coleccion<CategoriaDescuento>();
+    private ListaProveedor proveedores = new ListaProveedor();
     private Controlador controladorArchivos;
 
 
@@ -26,12 +28,22 @@ public class Empresa {
         this.clientes.setLista(controladorArchivos.obtenerClientes());
         this.usuarios.setLista(controladorArchivos.obtenerUsuarios());
         this.servicios.setLista(controladorArchivos.obtenerServicios());
+        this.proveedores.setLista(controladorArchivos.obtenerProveedores());
+        this.categoriaDesc.setLista(controladorArchivos.obtenerCategoriaDesc());
+        getUltimosIds();
     }
 
     public Empresa() {
         id ++;
     }
 
+    public void getUltimosIds(){
+        this.idCatDesc = categoriaDesc.ultimoId();
+        this.idUsuario = usuarios.ultimoId();
+        this.idCliente = clientes.ultimoId();
+        this.idProveedor = proveedores.ultimoId();
+        this.idServicio = servicios.ultimoId();
+    }
     public int getId() {
         return id;
     }
@@ -96,6 +108,28 @@ public class Empresa {
         controladorArchivos.actualizarArchivoServicios(this.servicios);
         controladorArchivos.actualizarArchivoClientes(this.clientes);
         controladorArchivos.actualizarArchivoUsuarios(this.usuarios);
+        controladorArchivos.actualizarArchivoProveedores(this.proveedores);
+        controladorArchivos.actualizarArchivoCategoriaDesc(this.categoriaDesc);
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public int getIdServicio() {
+        return idServicio;
+    }
+
+    public int getIdCatDesc() {
+        return idCatDesc;
+    }
+
+    public int getIdProveedor() {
+        return idProveedor;
     }
 
     public Usuario buscarUsuario(String nombre , String contraseña) throws LoginException{
@@ -108,6 +142,38 @@ public class Empresa {
         }
         if(buscado==null){
             throw new LoginException("Usuario o contraseña no validos");
+        }
+        return buscado;
+    }
+
+    public Usuario buscarUsuarioPorNombre(String nombre){
+        ArrayList<Usuario> lista = usuarios.getLista();
+        Usuario buscado = null;
+        for (Usuario u:lista) {
+            if(u.getNombre().equals(nombre)){
+                buscado = u;
+            }
+        }
+        return buscado;
+    }
+    public Usuario buscarUsuarioXDni(String dni){
+        ArrayList<Usuario> lista = usuarios.getLista();
+        Usuario buscado = null;
+        for (Usuario u:lista) {
+            if(u.getDni().equals(dni)){
+                buscado = u;
+            }
+        }
+        return buscado;
+    }
+
+    public Usuario buscarUsuario(String nombreUsuario){
+        ArrayList<Usuario> lista = usuarios.getLista();
+        Usuario buscado = null;
+        for (Usuario u:lista) {
+            if(u.getNombre().equals(nombreUsuario)){
+                buscado = u;
+            }
         }
         return buscado;
     }
@@ -137,32 +203,129 @@ public class Empresa {
         }
         return buscado;
     }
+    public Cliente buscarClienteXNombre(String nombre){
+        ArrayList<Cliente> lista = clientes.getLista();
+        Cliente buscado = null;
+        if(!nombre.isEmpty()){
+            for(Cliente c:lista){
+                if (c.getNombreCompleto().equals(nombre)) {
+                    buscado = c;
+                }
+            }
+        }
+        return buscado;
+    }
+
+    public Cliente buscarClienteXTelefono(String telefono){
+        ArrayList<Cliente> lista = clientes.getLista();
+        Cliente buscado = null;
+        if(!telefono.isEmpty()){
+            for(Cliente c:lista){
+                if (c.getNombreCompleto().equals(telefono)) {
+                    buscado = c;
+                }
+            }
+        }
+        return buscado;
+    }
 
     public void agregarCliente(Cliente cliente){
         this.clientes.agregar(cliente);
     }
 
+    public void agregarServicio(Servicio servicio){
+        this.servicios.agregar(servicio);
+    }
+    public void agregarCategoriaDesc(CategoriaDescuento catDesc){
+        this.categoriaDesc.agregar(catDesc);
+    }
+    public void agregarProveedor(Proveedor proveedor){
+        this.proveedores.agregar(proveedor);
+    }
+
+    public void agregarUsuario(Usuario usuario){
+        this.usuarios.agregar(usuario);
+    }
+
     public void listarClientes(){
-        clientes.listar();
+        for (Cliente c:this.clientes.getLista()){
+            if(c.getIsActive()){
+                clientes.imprimir(c);
+            }
+        }
     }
-
     public void listarServicios(){
-        servicios.listar();
+        for (Servicio s:this.servicios.getLista()){
+            if(s.getIsActive()){
+                servicios.imprimir(s);
+            }
+        }
+    }
+    public void listarUsuarios(){
+        for (Usuario u:this.usuarios.getLista()){
+            if(u.getIsActive()){
+                usuarios.imprimir(u);
+            }
+        }
     }
 
-    public void listarUsuarios(){
-        usuarios.listar();
+    public void listarCategoriasDesc(){
+        for (CategoriaDescuento c:this.categoriaDesc.getLista()){
+            categoriaDesc.imprimir(c);
+        }
+
     }
+
+    public void listarProveedores(){
+        proveedores.listar();
+    }
+
+
 
     public Servicio buscarServicio(String nombreServicio){
         Servicio buscado = null;
         for (Servicio s:servicios.getLista()) {
             if(s.getNombreServicio().equals(nombreServicio)){
-                buscado = s;
+                return s;
             }
         }
         return buscado;
     }
+
+    public CategoriaDescuento buscarCatDesc(String nombreCatDesc){
+        CategoriaDescuento buscado = null;
+        for (CategoriaDescuento cd:categoriaDesc.getLista()) {
+            if(cd.getNombre().equals(nombreCatDesc)){
+                buscado = cd;
+            }
+        }
+        return buscado;
+    }
+
+    public Proveedor buscarProveedor(String nombre){
+        Proveedor buscado = null;
+        Iterator<Map.Entry<Integer, Proveedor>> it = proveedores.getLista().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer, Proveedor> mapa = (Map.Entry<Integer, Proveedor>) it.next();
+            if(mapa.getValue().getNombre().equals(nombre)){
+                buscado = mapa.getValue();
+            }
+        }
+        return buscado;
+    }
+
+
+
+
+    public void eliminarProveedor(Proveedor nombre){
+        proveedores.eliminar(nombre);
+    }
+
+    public void eliminarUsuario (Usuario nombre){
+        usuarios.eliminar(nombre);
+    }
+
+
 
     @Override
     public String toString() {
