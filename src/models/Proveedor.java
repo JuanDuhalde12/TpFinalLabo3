@@ -18,7 +18,6 @@ public class Proveedor {
         this.telefono = telefono;
     }
     public Proveedor(int id) {
-        super();
         this.id=id;
     }
 

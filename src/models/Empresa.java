@@ -167,6 +167,17 @@ public class Empresa {
         return buscado;
     }
 
+    public Usuario buscarUsuario(String nombreUsuario){
+        ArrayList<Usuario> lista = usuarios.getLista();
+        Usuario buscado = null;
+        for (Usuario u:lista) {
+            if(u.getNombre().equals(nombreUsuario)){
+                buscado = u;
+            }
+        }
+        return buscado;
+    }
+
     public Cliente buscarClienteXDni(String dni){
         ArrayList<Cliente> lista = clientes.getLista();
         Cliente buscado = null;
