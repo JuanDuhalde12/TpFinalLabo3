@@ -60,8 +60,19 @@ public class Cliente extends Persona {
     public void listarCuentas(){
         int i = 1;
         for (Cuenta cuenta:listaCuentas) {
-            System.out.println(i + " " + cuenta.toString());
-            i++;
+            if(cuenta.getIsActive()){
+                System.out.println(i + " " + cuenta.toString());
+                i++;
+            }
+        }
+    }
+    public void listarCuentasInactivas(){
+        int i = 1;
+        for (Cuenta cuenta:listaCuentas) {
+            if(!cuenta.getIsActive()){
+                System.out.println(i + " " + cuenta.toString());
+                i++;
+            }
         }
     }
 

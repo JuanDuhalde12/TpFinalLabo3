@@ -82,10 +82,6 @@ public class Usuario extends Persona{
         }
     }
 
-
-
-
-
     @Override
     public String toString() {
         return "Usuario{ " + super.toString() +

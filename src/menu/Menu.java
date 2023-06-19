@@ -3,6 +3,8 @@ package menu;
 import Exceptions.DniExiste;
 import Exceptions.LoginException;
 import Exceptions.UsuarioExiste;
+import Exceptions.ValorNoValido;
+import com.sun.media.jfxmediaimpl.HostUtils;
 import models.*;
 
 import java.awt.event.ActionListener;
@@ -12,6 +14,8 @@ import java.io.Console;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Menu {
     private Scanner scan;
@@ -179,7 +183,11 @@ public class Menu {
                     break;
                 case 2:
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("CLientes Activos: ");
                     empresa.listarClientes();
+                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("CLientes NO Activos: ");
+                    empresa.listarClientesInactivos();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     do{
                         System.out.println("Ingrese Dni cliente a modificar");
@@ -187,7 +195,16 @@ public class Menu {
                         Cliente buscado = empresa.buscarClienteXDni(dni);
                         if(buscado!=null){
                             System.out.println(buscado.toString());
-                            modificarCliente(buscado);
+                            if(buscado.getIsActive()){
+                                modificarCliente(buscado);
+                            }else{
+                                System.out.println("Desea volver a activar al usuario? 1:SI 2:NO" );
+                                p = checkInput();
+                                scan.nextLine();
+                                if(p == 1){
+                                    buscado.setActive();
+                                }
+                            }
                         }else{
                             System.out.println("El cliente no existe");
                         }
@@ -203,7 +220,7 @@ public class Menu {
                     }
                     catch (DniExiste e){
                         System.out.println(e.getMessage());
-                        menuUsuarios();
+                        menuClientes();
                     }
                     break;
                 case 4:
@@ -354,9 +371,17 @@ public class Menu {
             System.out.println("Ingrese Ocupacion:");
             String ocupacion = scan.nextLine();
             cliente.setOcupacion(ocupacion);
-            System.out.println("Ingrese Email: ");
-            String email = scan.nextLine();
-            cliente.setEmail(email);
+            String emailValido="";
+            do{
+                try{
+                    System.out.println("Ingrese Email: ");
+                    String email = scan.nextLine();
+                    emailValido = chequearMailValido(email);
+                    cliente.setEmail(emailValido);
+                }catch(ValorNoValido e){
+                    System.out.println("Ingrese Mail valido");
+                }
+            }while(emailValido.isEmpty());
             System.out.println("Ingrese Telefono: ");
             String tel = scan.nextLine();
             cliente.setTelefono(tel);
@@ -434,7 +459,11 @@ public class Menu {
                     break;
                 case 8:
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("Cuentas Activas");
                     buscado.listarCuentas();
+                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("Cuentas NO Activas");
+                    buscado.listarCuentasInactivas();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     do{
                         System.out.println("Ingrese Nro de cuenta a modificar");
@@ -442,7 +471,16 @@ public class Menu {
                         Cuenta cuenta = buscado.buscarCuentaXNro(nro);
                         if(cuenta!=null){
                             System.out.println(cuenta.toString());
-                            modificarCuenta(cuenta, buscado);
+                            if(buscado.getIsActive()){
+                                modificarCuenta(cuenta,buscado);
+                            }else{
+                                System.out.println("Desea volver a activar al usuario? 1:SI 2:NO" );
+                                p = checkInput();
+                                scan.nextLine();
+                                if(p == 1){
+                                    cuenta.setActive();
+                                }
+                            }
                         }else{
                             System.out.println("La cuenta no existe");
                         }
@@ -645,7 +683,11 @@ public class Menu {
                     break;
                 case 2:
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("Servicios Activos: ");
                     empresa.listarServicios();
+                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("Servicios NO Activos: ");
+                    empresa.listarServiciosInactivos();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     do{
                         System.out.println("Ingrese Nombre de Servicio a Modificar: ");
@@ -653,7 +695,16 @@ public class Menu {
                         Servicio buscado = empresa.buscarServicio(nombre);
                         if(buscado!=null){
                             System.out.println(buscado.toString());
-                            modificarServicio(buscado);
+                            if(buscado.getIsActive()){
+                                modificarServicio(buscado);
+                            }else{
+                                System.out.println("Desea volver a activar al servicio? 1:SI 2:NO" );
+                                p = checkInput();
+                                scan.nextLine();
+                                if(p == 1){
+                                    buscado.setActive();
+                                }
+                            }
                         }else{
                             System.out.println("El servicio no existe");
                         }
@@ -738,6 +789,8 @@ public class Menu {
             }
         }while(opcion!=9);
     }
+
+
 
     public void crearServicio(){
         int opcion;
@@ -1036,15 +1089,28 @@ public class Menu {
                     break;
                 case 2:
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("Usuarios Activos: ");
                     empresa.listarUsuarios();
+                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("Usuarios NO Activos: ");
+                    empresa.listarUsuariosInactivos();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     do{
                         System.out.println("Ingrese Nombre de Usuario a Modificar: ");
                         String nombre = scan.nextLine();
-                        Usuario buscado = empresa.buscarUsuarioPorNombre(nombre);
+                        Usuario buscado = empresa.buscarUsuario(nombre);
                         if(buscado!=null){
                             System.out.println(buscado.toString());
-                            modificarUsuario(buscado);
+                            if(buscado.getIsActive()){
+                                modificarUsuario(buscado);
+                            }else{
+                                System.out.println("Desea volver a activar al usuario? 1:SI 2:NO" );
+                                p = checkInput();
+                                scan.nextLine();
+                                if(p == 1){
+                                    buscado.setActive();
+                                }
+                            }
                         }else{
                             System.out.println("El Usuario no existe");
                         }
@@ -1068,13 +1134,13 @@ public class Menu {
                     empresa.listarUsuarios();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     do{
-                        System.out.println("Ingrese Nombre de Usuario a eliminar");
+                        System.out.println("Ingrese Nombre de Usuario a dar de baja");
                         String nombreUsuario = scan.nextLine();
-                        Usuario buscado = empresa.buscarUsuarioPorNombre(nombreUsuario);
+                        Usuario buscado = empresa.buscarUsuario(nombreUsuario);
                         if(buscado!=null){
                             System.out.println(buscado.toString());
-                            empresa.eliminarUsuario(buscado);
-                            System.out.println("Usuario Eliminado");
+                            buscado.setNotActive();
+                            System.out.println("Usuario dado de baja");
                         }else{
                             System.out.println("El Usuario no existe");
                         }
@@ -1166,9 +1232,17 @@ public class Menu {
             System.out.println("Ingrese Nombre Completo del Usuario:");
             String nombreCompleto = scan.nextLine();
             usuario.setNombreCompleto(nombreCompleto);
-            System.out.println("Ingrese Email del Usuario:");
-            String email = scan.nextLine();
-            usuario.setEmail(email);
+            String emailValido="";
+            do{
+                try{
+                    System.out.println("Ingrese Email: ");
+                    String email = scan.nextLine();
+                    emailValido = chequearMailValido(email);
+                    usuario.setEmail(emailValido);
+                }catch(ValorNoValido e){
+                    System.out.println("Ingrese Mail valido");
+                }
+            }while(emailValido.isEmpty());
             System.out.println("Seleccione Tipo de Usuario");
             do {
                 System.out.println("1. Tipo Administrador");
@@ -1210,6 +1284,20 @@ public class Menu {
             System.out.println("Valor no valido");
             return 0;
         }
+    }
+
+    public String chequearMailValido(String email) throws ValorNoValido {
+        String emailPattern = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@" + "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
+        Pattern pattern = Pattern.compile(emailPattern);
+        if (email != null) {
+            Matcher matcher = pattern.matcher(email);
+            if (matcher.matches()) {
+                return email;
+            }else{
+                throw new ValorNoValido("Email no valido");
+            }
+        }
+        return email;
     }
 }
 

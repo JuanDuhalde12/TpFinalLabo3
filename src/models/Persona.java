@@ -17,6 +17,7 @@ public class Persona {
 
     public boolean getIsActive(){return isActive;}
     public void setNotActive(){this.isActive=false;}
+    public void setActive(){this.isActive=true;}
     public String getNombreCompleto() {
         return nombreCompleto;
     }
