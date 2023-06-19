@@ -1,10 +1,5 @@
 package Archivos;
 
-import Coleccion.Coleccion;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import models.Cliente;
@@ -14,11 +9,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.*;
-import models.Servicio;
-import models.Usuario;
-
-public class ArchivoCliente implements Serializable {
+public class ArchivoCliente extends ArchivoArray<Cliente> implements Serializable {
     private Gson gson;
     private File file;
 
@@ -27,6 +18,7 @@ public class ArchivoCliente implements Serializable {
         file = new File("Archivos/clientes.json");
     }
 
+    @Override
     public void crearArchivo(ArrayList<Cliente> listaClientes) {
         FileWriter writer = null;
         if(!listaClientes.isEmpty()){
@@ -45,6 +37,7 @@ public class ArchivoCliente implements Serializable {
         }
     }
 
+    @Override
     public ArrayList<Cliente> leerArchivo(){
         FileReader reader = null;
         ArrayList<Cliente> listaClientes = null;
@@ -67,6 +60,5 @@ public class ArchivoCliente implements Serializable {
         }
         return listaClientes;
     }
-
 
 }

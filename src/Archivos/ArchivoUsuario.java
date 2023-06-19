@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import models.*;
 
-public class ArchivoUsuario implements Serializable{
+public class ArchivoUsuario extends ArchivoArray<Usuario> implements Serializable{
     private Gson gson;
     private File file;
 
@@ -17,7 +17,8 @@ public class ArchivoUsuario implements Serializable{
         file = new File("Archivos/usuarios.json");
     }
 
-    public void crearArchivoJson(ArrayList<Usuario> listaUsuarios){
+    @Override
+    public void crearArchivo(ArrayList<Usuario> listaUsuarios){
         FileWriter writer = null;
         if(!listaUsuarios.isEmpty()) {
             try {
@@ -37,6 +38,7 @@ public class ArchivoUsuario implements Serializable{
         }
     }
 
+    @Override
     public ArrayList<Usuario> leerArchivo(){
         FileReader reader = null;
         ArrayList<Usuario> lista = null;

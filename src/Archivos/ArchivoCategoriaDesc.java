@@ -8,7 +8,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class ArchivoCategoriaDesc extends Archivo<T> implements Serializable {
+public class ArchivoCategoriaDesc extends ArchivoArray<CategoriaDescuento> implements Serializable {
     private Gson gson;
     private File file;
 
@@ -34,6 +34,7 @@ public class ArchivoCategoriaDesc extends Archivo<T> implements Serializable {
             }
         }
     }
+
     @Override
     public ArrayList<CategoriaDescuento> leerArchivo(){
         FileReader reader = null;
