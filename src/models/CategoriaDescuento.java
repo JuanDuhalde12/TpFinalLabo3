@@ -12,7 +12,10 @@ public class CategoriaDescuento {
         this.nombre = nombre;
         this.porcentajeDescuento = porcentajeDescuento;
     }
-
+    public CategoriaDescuento(int id) {
+        super();
+        this.id=id;
+    }
     public CategoriaDescuento() {
     }
 

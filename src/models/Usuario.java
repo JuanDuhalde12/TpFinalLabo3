@@ -1,6 +1,8 @@
 package models;
 
 
+import com.google.gson.internal.bind.util.ISO8601Utils;
+
 public class Usuario extends Persona{
     private static int cont = 0;
     private int id;
@@ -20,6 +22,11 @@ public class Usuario extends Persona{
         this.nombre = nombre;
         this.contraseña = contraseña;
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public Usuario(int id) {
+        super();
+        this.id=id;
     }
 
     public Usuario() {
@@ -56,6 +63,26 @@ public class Usuario extends Persona{
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+
+    public void cambioDeTipoDeUsuario(){
+        if(getTipoUsuario().equals(TipoUsuario.ADMINISTRADOR)){
+            setTipoUsuario(TipoUsuario.USUARIO);
+        }else{
+            setTipoUsuario(TipoUsuario.ADMINISTRADOR);
+        }
+    }
+
+    public void mostrarElOtroTipo(){
+        if(getTipoUsuario().equals(TipoUsuario.ADMINISTRADOR)){
+            System.out.println("Pasara a ser de tipo: " + TipoUsuario.USUARIO);
+        }else {
+            System.out.println("Pasara a ser de tipo: " + TipoUsuario.ADMINISTRADOR);
+        }
+    }
+
+
+
+
 
     @Override
     public String toString() {

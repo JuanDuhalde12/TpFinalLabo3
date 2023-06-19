@@ -16,13 +16,8 @@ public class Main {
 //      comenzar();
       /*
       Cosas para hacer:
-      - hacer menu servicio
-      - hacer menu cuenta
-      - hacer menu catDesc
-      - hacer menu proveedores
-      - agregar validacion dni para usuario y cliente
       - ver tomar ultimo id
-      - cambiar eliminar que es usar funcion setNotActive();
+      - cuando das de baja cliente, dar de baja tmb cuentas de ese cliente
        */
        Menu menu = new Menu();
        menu.menuInicio();
@@ -62,8 +57,8 @@ public class Main {
       CategoriaDescuento cat2 = new CategoriaDescuento("cat 2", 20);
 
       //Creamos las cuentas
-      Cuenta cta1 = new Cuenta("Roldan 557", monitoreo, cat1, fechaHoy.toString(), aumento.toString(),"gato",intacto.getNombre(),c1.getId());
-      Cuenta cta2 = new Cuenta("Zacagnini 4505", instalacion, cat2, fechaHoy.toString(), aumento.toString(),"perro","",c1.getId());
+      Cuenta cta1 = new Cuenta("Roldan 557", monitoreo, cat1, fechaHoy.toString(), aumento.toString(),"gato",intacto,c1.getId());
+      Cuenta cta2 = new Cuenta("Zacagnini 4505", instalacion, cat2, fechaHoy.toString(), aumento.toString(),"perro",medinilla,c1.getId());
 
       //agregamos cuentas a cliente
       c1.agregarCuenta(cta1);

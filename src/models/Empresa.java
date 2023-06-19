@@ -146,6 +146,27 @@ public class Empresa {
         return buscado;
     }
 
+    public Usuario buscarUsuarioPorNombre(String nombre){
+        ArrayList<Usuario> lista = usuarios.getLista();
+        Usuario buscado = null;
+        for (Usuario u:lista) {
+            if(u.getNombre().equals(nombre)){
+                buscado = u;
+            }
+        }
+        return buscado;
+    }
+    public Usuario buscarUsuarioXDni(String dni){
+        ArrayList<Usuario> lista = usuarios.getLista();
+        Usuario buscado = null;
+        for (Usuario u:lista) {
+            if(u.getDni().equals(dni)){
+                buscado = u;
+            }
+        }
+        return buscado;
+    }
+
     public Cliente buscarClienteXDni(String dni){
         ArrayList<Cliente> lista = clientes.getLista();
         Cliente buscado = null;
@@ -171,12 +192,25 @@ public class Empresa {
         }
         return buscado;
     }
-    public Cliente buscarClienteXNombre(String Nombre){
+    public Cliente buscarClienteXNombre(String nombre){
         ArrayList<Cliente> lista = clientes.getLista();
         Cliente buscado = null;
-        if(!domicilio.isEmpty()){
+        if(!nombre.isEmpty()){
             for(Cliente c:lista){
-                if (c.getDomicilio().equals(domicilio)) {
+                if (c.getNombreCompleto().equals(nombre)) {
+                    buscado = c;
+                }
+            }
+        }
+        return buscado;
+    }
+
+    public Cliente buscarClienteXTelefono(String telefono){
+        ArrayList<Cliente> lista = clientes.getLista();
+        Cliente buscado = null;
+        if(!telefono.isEmpty()){
+            for(Cliente c:lista){
+                if (c.getNombreCompleto().equals(telefono)) {
                     buscado = c;
                 }
             }
@@ -188,6 +222,20 @@ public class Empresa {
         this.clientes.agregar(cliente);
     }
 
+    public void agregarServicio(Servicio servicio){
+        this.servicios.agregar(servicio);
+    }
+    public void agregarCategoriaDesc(CategoriaDescuento catDesc){
+        this.categoriaDesc.agregar(catDesc);
+    }
+    public void agregarProveedor(Proveedor proveedor){
+        this.proveedores.agregar(proveedor);
+    }
+
+    public void agregarUsuario(Usuario usuario){
+        this.usuarios.agregar(usuario);
+    }
+
     public void listarClientes(){
         for (Cliente c:this.clientes.getLista()){
             if(c.getIsActive()){
@@ -195,7 +243,6 @@ public class Empresa {
             }
         }
     }
-
     public void listarServicios(){
         for (Servicio s:this.servicios.getLista()){
             if(s.getIsActive()){
@@ -203,7 +250,6 @@ public class Empresa {
             }
         }
     }
-
     public void listarUsuarios(){
         for (Usuario u:this.usuarios.getLista()){
             if(u.getIsActive()){
@@ -222,6 +268,8 @@ public class Empresa {
     public void listarProveedores(){
         proveedores.listar();
     }
+
+
 
     public Servicio buscarServicio(String nombreServicio){
         Servicio buscado = null;
@@ -254,6 +302,19 @@ public class Empresa {
         }
         return buscado;
     }
+
+
+
+
+    public void eliminarProveedor(Proveedor nombre){
+        proveedores.eliminar(nombre);
+    }
+
+    public void eliminarUsuario (Usuario nombre){
+        usuarios.eliminar(nombre);
+    }
+
+
 
     @Override
     public String toString() {

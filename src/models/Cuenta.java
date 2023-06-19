@@ -8,10 +8,10 @@ public class Cuenta {
     private String fechaAlta,fechaAumento;
     private CategoriaDescuento categoria;
     private String claveOperador;
-    private String nombreProveedor;
+    private Proveedor prov;
     private boolean isActive;
 
-    public Cuenta(String domicilioServicio, Servicio servicio, CategoriaDescuento categoria, String fechaAlta, String fechaAumento, String claveOperador,String nombreProveedor,int idCliente) {
+    public Cuenta(String domicilioServicio, Servicio servicio, CategoriaDescuento categoria, String fechaAlta, String fechaAumento, String claveOperador,Proveedor prov,int idCliente) {
         this.nroCuenta = idCliente+"/"+count++;
         this.domicilioServicio = domicilioServicio;
         this.servicio = servicio;
@@ -20,12 +20,12 @@ public class Cuenta {
         this.fechaAlta = fechaAlta;
         this.claveOperador = claveOperador;
         this.isActive = true;
-        this.nombreProveedor = nombreProveedor;
+        this.prov = prov;
     }
 
     public Cuenta(int idCliente,int ultimoId) {
         this.nroCuenta = idCliente+"/"+ultimoId;
-        this.nombreProveedor= "";
+        this.isActive = true;
     }
 
     public String getClaveOperador() {
@@ -89,13 +89,15 @@ public class Cuenta {
         this.categoria = categoria;
     }
 
-    public String getNombreProveedor() {
-        return nombreProveedor;
+    public Proveedor getProveedor() {
+        return prov;
     }
 
-    public void setNombreProveedor(String nombreProveedor) {
-        this.nombreProveedor = nombreProveedor;
+    public void setProveedor(String nombreProveedor) {
+        this.prov = prov;
     }
+
+
 
     @Override
     public String toString() {
@@ -107,6 +109,6 @@ public class Cuenta {
                 ", fechaAumento='" + fechaAumento + '\'' +
                 ", categoria=" + categoria +
                 ", claveOperador='" + claveOperador + '\'' +
-                ", nombreProveedor='" + nombreProveedor + '\'';
+                ", nombreProveedor='" + prov + '\'';
     }
 }
