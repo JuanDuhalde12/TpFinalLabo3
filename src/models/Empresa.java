@@ -156,6 +156,16 @@ public class Empresa {
         }
         return buscado;
     }
+    public Usuario buscarUsuarioXDni(String dni){
+        ArrayList<Usuario> lista = usuarios.getLista();
+        Usuario buscado = null;
+        for (Usuario u:lista) {
+            if(u.getDni().equals(dni)){
+                buscado = u;
+            }
+        }
+        return buscado;
+    }
 
     public Cliente buscarClienteXDni(String dni){
         ArrayList<Cliente> lista = clientes.getLista();
@@ -292,6 +302,9 @@ public class Empresa {
         }
         return buscado;
     }
+
+
+
 
     public void eliminarProveedor(Proveedor nombre){
         proveedores.eliminar(nombre);

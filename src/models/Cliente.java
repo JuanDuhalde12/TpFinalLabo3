@@ -79,6 +79,19 @@ public class Cliente extends Persona {
         }
     }
 
+    public Cuenta buscarCuentaXNro (String nroCuenta){
+        Cuenta buscado = null;
+        for (Cuenta cd : listaCuentas) {
+            if(cd.getNroCuenta().equals(nroCuenta)){
+                buscado = cd;
+            }
+        }
+        return buscado;
+    }
+
+
+
+
     @Override
     public String toString() {
         return  super.toString() +
