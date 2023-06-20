@@ -60,8 +60,19 @@ public class Cliente extends Persona {
     public void listarCuentas(){
         int i = 1;
         for (Cuenta cuenta:listaCuentas) {
-            System.out.println(i + " " + cuenta.toString());
-            i++;
+            if(cuenta.getIsActive()){
+                System.out.println(i + " " + cuenta.toString());
+                i++;
+            }
+        }
+    }
+    public void listarCuentasInactivas(){
+        int i = 1;
+        for (Cuenta cuenta:listaCuentas) {
+            if(!cuenta.getIsActive()){
+                System.out.println(i + " " + cuenta.toString());
+                i++;
+            }
         }
     }
 
@@ -89,15 +100,12 @@ public class Cliente extends Persona {
         return buscado;
     }
 
-
-
-
     @Override
     public String toString() {
-        return  super.toString() +
-                ", telefono= " + telefono  +
-                ", domicilio= " + domicilio  +
-                ", ocupacion= " + ocupacion +
-                ", Cantidad de cuentas= " + listaCuentas.size() ;
+        return  "Cliente >> " + super.toString() +
+                "telefono= " + telefono  + " || " +
+                "domicilio= " + domicilio  + " || " +
+                "ocupacion= " + ocupacion + " || " +
+                "Cantidad de cuentas= " + listaCuentas.size() ;
     }
 }

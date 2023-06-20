@@ -41,10 +41,10 @@ public class ListaProveedor implements IultimoId {
         while (it.hasNext()) {
             Map.Entry<Integer, Proveedor> mapa = (Map.Entry<Integer, Proveedor>) it.next();
             if(id < mapa.getValue().getId()){
-                id=mapa.getValue().getId()+1;
+                id=mapa.getValue().getId();
             }
         }
-        return id;
+        return id+1;
     }
 
     public void listar() {

@@ -37,6 +37,7 @@ public class Servicio {
 
     public boolean getIsActive(){return isActive;}
     public void setNotActive(){this.isActive=false;}
+    public void setActive(){this.isActive=true;}
     public int getId() {
         return id;
     }
@@ -68,10 +69,10 @@ public class Servicio {
 
     @Override
     public String toString() {
-        return "Servicio{" +
-                "nombreServicio='" + nombreServicio + '\'' +
-                ", precio=" + precio +
-                ", isComodato=" + isComodato +
-                '}';
+        return "Servicio >> " +
+                "nombreServicio= " + nombreServicio + " || " +
+                "precio= " + precio + " || " +
+                "isComodato= " + isComodato +
+                " <<";
     }
 }

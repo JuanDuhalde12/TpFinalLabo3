@@ -196,7 +196,7 @@ public class Empresa {
         Cliente buscado = null;
         if(!domicilio.isEmpty()){
             for(Cliente c:lista){
-                if (c.getDomicilio().equals(domicilio)) {
+                if (c.getDomicilio().toLowerCase().equals(domicilio.toLowerCase())) {
                     buscado = c;
                 }
             }
@@ -208,7 +208,7 @@ public class Empresa {
         Cliente buscado = null;
         if(!nombre.isEmpty()){
             for(Cliente c:lista){
-                if (c.getNombreCompleto().equals(nombre)) {
+                if (c.getNombreCompleto().toLowerCase().equals(nombre.toLowerCase())) {
                     buscado = c;
                 }
             }
@@ -254,9 +254,24 @@ public class Empresa {
             }
         }
     }
+
+    public void listarClientesInactivos(){
+        for (Cliente c:this.clientes.getLista()){
+            if(!c.getIsActive()){
+                clientes.imprimir(c);
+            }
+        }
+    }
     public void listarServicios(){
         for (Servicio s:this.servicios.getLista()){
             if(s.getIsActive()){
+                servicios.imprimir(s);
+            }
+        }
+    }
+    public void listarServiciosInactivos(){
+        for (Servicio s:this.servicios.getLista()){
+            if(!s.getIsActive()){
                 servicios.imprimir(s);
             }
         }
@@ -268,12 +283,18 @@ public class Empresa {
             }
         }
     }
+    public void listarUsuariosInactivos(){
+        for (Usuario u:this.usuarios.getLista()){
+            if(!u.getIsActive()){
+                usuarios.imprimir(u);
+            }
+        }
+    }
 
     public void listarCategoriasDesc(){
         for (CategoriaDescuento c:this.categoriaDesc.getLista()){
             categoriaDesc.imprimir(c);
         }
-
     }
 
     public void listarProveedores(){
@@ -307,33 +328,23 @@ public class Empresa {
         Iterator<Map.Entry<Integer, Proveedor>> it = proveedores.getLista().entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<Integer, Proveedor> mapa = (Map.Entry<Integer, Proveedor>) it.next();
-            if(mapa.getValue().getNombre().equals(nombre)){
+            if(mapa.getValue().getNombre().toLowerCase().equals(nombre.toLowerCase())){
                 buscado = mapa.getValue();
             }
         }
         return buscado;
     }
 
-
-
-
     public void eliminarProveedor(Proveedor nombre){
         proveedores.eliminar(nombre);
     }
 
-    public void eliminarUsuario (Usuario nombre){
-        usuarios.eliminar(nombre);
-    }
-
-
-
     @Override
     public String toString() {
-        return "Empresa{ id= " + id +
-                ", telefono='" + telefono + '\'' +
-                ", email='" + email + '\'' +
-                ", domicilio='" + domicilio + '\'' +
-                ", cuit='" + cuit + '\'' +
-                '}';
+        return "Empresa >> " + "id= " + id + " || " +
+                "telefono= " + telefono + " || " +
+                "email= " + email + " || " +
+                "domicilio= " + domicilio + " || " +
+                "cuit= " + cuit + " <<";
     }
 }

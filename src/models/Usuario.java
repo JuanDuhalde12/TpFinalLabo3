@@ -82,16 +82,12 @@ public class Usuario extends Persona{
         }
     }
 
-
-
-
-
     @Override
     public String toString() {
-        return "Usuario{ " + super.toString() +
-                ", nombre='" + nombre + '\'' +
-                ", contraseña='" + contraseña + '\'' +
-                ", tipoUsuario=" + tipoUsuario +
-                "} " ;
+        return "Usuario >> " + super.toString() +
+                "nombre= " + nombre + " || " +
+                "contraseña= " + contraseña + " || " +
+                "tipoUsuario= " + tipoUsuario +
+                " <<";
     }
 }
