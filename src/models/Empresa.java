@@ -341,11 +341,10 @@ public class Empresa {
 
     @Override
     public String toString() {
-        return "Empresa{ id= " + id +
-                ", telefono='" + telefono + '\'' +
-                ", email='" + email + '\'' +
-                ", domicilio='" + domicilio + '\'' +
-                ", cuit='" + cuit + '\'' +
-                '}';
+        return "Empresa >> " + "id= " + id + " || " +
+                "telefono= " + telefono + " || " +
+                "email= " + email + " || " +
+                "domicilio= " + domicilio + " || " +
+                "cuit= " + cuit + " <<";
     }
 }

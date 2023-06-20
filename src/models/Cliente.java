@@ -100,15 +100,12 @@ public class Cliente extends Persona {
         return buscado;
     }
 
-
-
-
     @Override
     public String toString() {
-        return  super.toString() +
-                ", telefono= " + telefono  +
-                ", domicilio= " + domicilio  +
-                ", ocupacion= " + ocupacion +
-                ", Cantidad de cuentas= " + listaCuentas.size() ;
+        return  "Cliente >> " + super.toString() +
+                "telefono= " + telefono  + " || " +
+                "domicilio= " + domicilio  + " || " +
+                "ocupacion= " + ocupacion + " || " +
+                "Cantidad de cuentas= " + listaCuentas.size() ;
     }
 }

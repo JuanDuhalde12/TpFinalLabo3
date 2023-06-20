@@ -97,14 +97,14 @@ public class Cuenta {
 
     @Override
     public String toString() {
-        return "Cuenta{" +
-                "nroCuenta=" + nroCuenta +
-                ", domicilioServicio='" + domicilioServicio + '\'' +
-                ", servicio=" + servicio +
-                ", fechaAlta='" + fechaAlta + '\'' +
-                ", fechaAumento='" + fechaAumento + '\'' +
-                ", categoria=" + categoria +
-                ", claveOperador='" + claveOperador + '\'' +
-                ", nombreProveedor='" + prov + '\'';
+        return "Cuenta >> " +
+                "nroCuenta =" + nroCuenta + " || " +
+                "domicilioServicio= " + domicilioServicio + " || " +
+                "servicio= " + servicio +
+                "fechaAlta= " + fechaAlta + " || " +
+                "fechaAumento= " + fechaAumento + " || " +
+                "categoria= " + categoria + " || " +
+                "claveOperador= " + claveOperador + " || " +
+                "nombreProveedor= " + prov + " <<";
     }
 }
