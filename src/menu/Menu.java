@@ -1036,7 +1036,7 @@ public class Menu {
                     buscado.setTelefono(tel);
                     break;
                 case 9:
-                    menuClientes();
+                    menuProveedores();
                     break;
                 default:
                     System.out.println("Comando no valido");
@@ -1057,11 +1057,16 @@ public class Menu {
             System.out.println("Ingrese Numero de Telefono del Proveedor:");
             String numero = scan.nextLine();
             proveedor.setTelefono(numero);
-            System.out.println("Presione 1 para aceptar");
+            System.out.println("Presione 1 para aceptar / 0 para cancelar");
             opcion = checkInput();
             scan.nextLine();
-        }while(opcion!=1);
-        empresa.agregarProveedor(proveedor);
+        }while(opcion!=1 && opcion!=0);
+        if (opcion==1){
+            empresa.agregarProveedor(proveedor);
+        }else {
+            menuProveedores();
+        }
+
     }
     //endregion
 

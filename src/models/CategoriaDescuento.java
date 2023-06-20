@@ -45,9 +45,9 @@ public class CategoriaDescuento {
 
     @Override
     public String toString() {
-        return "CategoriaDescuento{" +
-                "nombre='" + nombre + '\'' +
-                ", porcentajeDescuento=" + porcentajeDescuento +
-                '}';
+        return "CategoriaDescuento >> " +
+                "nombre= " + nombre + " || "+
+                "porcentajeDescuento= " + porcentajeDescuento +
+                " <<";
     }
 }

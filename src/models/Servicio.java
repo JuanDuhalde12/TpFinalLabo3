@@ -69,10 +69,10 @@ public class Servicio {
 
     @Override
     public String toString() {
-        return "Servicio{" +
-                "nombreServicio='" + nombreServicio + '\'' +
-                ", precio=" + precio +
-                ", isComodato=" + isComodato +
-                '}';
+        return "Servicio >> " +
+                "nombreServicio= " + nombreServicio + " || " +
+                "precio= " + precio + " || " +
+                "isComodato= " + isComodato +
+                " <<";
     }
 }
