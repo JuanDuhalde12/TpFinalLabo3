@@ -1,6 +1,10 @@
 package menu;
 
+import Exceptions.DniExiste;
 import Exceptions.LoginException;
+import Exceptions.UsuarioExiste;
+import Exceptions.ValorNoValido;
+import com.sun.media.jfxmediaimpl.HostUtils;
 import models.*;
 
 import java.awt.event.ActionListener;
@@ -10,6 +14,8 @@ import java.io.Console;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Menu {
     private Scanner scan;
@@ -36,17 +42,11 @@ public class Menu {
         do {
             System.out.println("Bienvenido al sistema");
             System.out.println("1. Log In");
-            System.out.println("0. Salir");
-            opcion = scan.nextInt();
+            System.out.println("2. Salir");
+            opcion = checkInput();
             scan.nextLine();
 
             switch (opcion){
-                case 0:
-                    System.out.println("Cerrando sistema....");
-                    System.out.println("Actualizando archivos...");
-                    empresa.actualizarArchivos();
-                    System.exit(0);
-                    break;
                 case 1:
                     System.out.println("Usuario: ");
                     String usuario = scan.nextLine();
@@ -64,13 +64,18 @@ public class Menu {
                     }catch(LoginException e){
                         System.out.println(e.getMessage());
                     }
-
+                    break;
+                case 2:
+                    System.out.println("Cerrando sistema....");
+                    System.out.println("Actualizando archivos...");
+                    empresa.actualizarArchivos();
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Comando Invalido");
                     break;
             }
-        }while(opcion!=0);
+        }while(opcion!=2);
     }
 
     public void menuAdmin(){
@@ -82,14 +87,11 @@ public class Menu {
             System.out.println("3. Categoria Descuento");
             System.out.println("4. Proveedores");
             System.out.println("5. Usuarios");
-            System.out.println("0. Volver");
-            opcion = scan.nextInt();
+            System.out.println("9. Volver");
+            opcion = checkInput();
             scan.nextLine();
 
             switch (opcion){
-                case 0:
-                    menuInicio();
-                    break;
                 case 1:
                     menuClientes();
                     break;
@@ -105,11 +107,14 @@ public class Menu {
                 case 5:
                     menuUsuarios();
                     break;
+                case 9:
+                    menuInicio();
+                    break;
                 default:
                     System.out.println("Comando no valido");
                     break;
             }
-        }while(opcion!=0);
+        }while(opcion!=9);
 
     }
 
@@ -121,14 +126,11 @@ public class Menu {
             System.out.println("2. Servicios");
             System.out.println("3. Categoria Descuento");
             System.out.println("4. Proveedores");
-            System.out.println("0. Volver");
-            opcion = scan.nextInt();
+            System.out.println("9. Volver");
+            opcion = checkInput();
             scan.nextLine();
 
             switch(opcion){
-                case 0:
-                    menuInicio();
-                    break;
                 case 1:
                     menuClientes();
                     break;
@@ -141,12 +143,14 @@ public class Menu {
                 case 4:
                     menuProveedores();
                     break;
+                case 9:
+                    menuInicio();
+                    break;
                 default:
                     System.out.println("Comando no valido");
                     break;
-
             }
-        }while(opcion!=0);
+        }while(opcion!=9);
     }
 
     //region menuClientes
@@ -160,8 +164,8 @@ public class Menu {
                 System.out.println("3. Crear");
                 System.out.println("4. Listar Clientes");
                 System.out.println("5. Dar de baja");
-                System.out.println("0. Volver");
-                opcion = scan.nextInt();
+                System.out.println("9. Volver");
+                opcion = checkInput();
                 scan.nextLine();
             }else{
                 System.out.println("Menu Cliente");
@@ -169,20 +173,21 @@ public class Menu {
                 System.out.println("2. Modificar/Cuentas");
                 System.out.println("3. Crear");
                 System.out.println("4. Listar Clientes");
-                System.out.println("0. Volver");
-                opcion = scan.nextInt();
+                System.out.println("9. Volver");
+                opcion = checkInput();
                 scan.nextLine();
             }
             switch (opcion){
-                case 0:
-                    menuInicio();
-                    break;
                 case 1:
                     buscarCliente();
                     break;
                 case 2:
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("CLientes Activos: ");
                     empresa.listarClientes();
+                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("CLientes NO Activos: ");
+                    empresa.listarClientesInactivos();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     do{
                         System.out.println("Ingrese Dni cliente a modificar");
@@ -190,7 +195,16 @@ public class Menu {
                         Cliente buscado = empresa.buscarClienteXDni(dni);
                         if(buscado!=null){
                             System.out.println(buscado.toString());
-                            modificarCliente(buscado);
+                            if(buscado.getIsActive()){
+                                modificarCliente(buscado);
+                            }else{
+                                System.out.println("Desea volver a activar al usuario? 1:SI 2:NO" );
+                                p = checkInput();
+                                scan.nextLine();
+                                if(p == 1){
+                                    buscado.setActive();
+                                }
+                            }
                         }else{
                             System.out.println("El cliente no existe");
                         }
@@ -200,18 +214,24 @@ public class Menu {
                     }while(p!=0);
                     break;
                 case 3:
-                    crearCliente();
-                    System.out.println("Cliente agregado");
+                    try{
+                        crearCliente();
+                        System.out.println("Cliente agregado");
+                    }
+                    catch (DniExiste e){
+                        System.out.println(e.getMessage());
+                        menuClientes();
+                    }
                     break;
                 case 4:
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     empresa.listarClientes();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     do{
-                        System.out.println("Presione 0 para volver");
-                        q = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        q = checkInput();
                         scan.nextLine();
-                    }while (q!=0);
+                    }while (q!=1);
                     break;
                 case 5:
                     do{
@@ -225,16 +245,23 @@ public class Menu {
                         }else{
                             System.out.println("El cliente no existe");
                         }
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
+                    break;
+                case 9:
+                    if(usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
+                        menuAdmin();
+                    }else {
+                        menuUser();
+                    }
                     break;
                 default:
                     System.out.println("Comando no valido");
                     break;
             }
-        }while(opcion!=0);
+        }while(opcion!=9);
 
     }
 
@@ -246,14 +273,11 @@ public class Menu {
             System.out.println("2. DNI");
             System.out.println("3. Domicilio");
             System.out.println("4. Telefono");
-            System.out.println("0. Volver");
-            opcion = scan.nextInt();
+            System.out.println("9. Volver");
+            opcion = checkInput();
             scan.nextLine();
 
             switch (opcion){
-                case 0:
-                    menuClientes();
-                    break;
                 case 1:
                     do{
                         System.out.println("Ingrese Nombre completo de cliente a buscar");
@@ -264,10 +288,10 @@ public class Menu {
                         }else{
                             System.out.println("El cliente no existe");
                         }
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
                     break;
                 case 2:
                     do{
@@ -279,10 +303,10 @@ public class Menu {
                         }else{
                             System.out.println("El cliente no existe");
                         }
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
                     break;
                 case 3:
                     do{
@@ -294,10 +318,10 @@ public class Menu {
                         }else{
                             System.out.println("El cliente no existe");
                         }
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
                     break;
                 case 4:
                     do{
@@ -309,20 +333,23 @@ public class Menu {
                         }else{
                             System.out.println("El cliente no existe");
                         }
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
+                    break;
+                case 9:
+                    menuClientes();
                     break;
                 default:
                     System.out.println("Comando no valido");
                     break;
 
             }
-        }while(opcion!=0);
+        }while(opcion!=9);
     }
 
-    public void crearCliente(){
+    public void crearCliente()throws DniExiste{
         int opcion;
         empresa.getUltimosIds();
         Cliente cliente = new Cliente(empresa.getIdCliente());
@@ -333,12 +360,7 @@ public class Menu {
             cliente.setDni(dni);
             Cliente buscado = empresa.buscarClienteXDni(dni);
             if(buscado!=null){
-                int a = 1;
-                do{
-                    System.out.println("El DNI ingresado ya existe");
-                    System.out.println("Presione 0 para continuar");
-                }while (a!=0);
-                menuClientes();
+                throw new DniExiste("El DNI ya existe");
             }
             System.out.println("Ingrese Nombre Completo:");
             String nombre = scan.nextLine();
@@ -349,18 +371,26 @@ public class Menu {
             System.out.println("Ingrese Ocupacion:");
             String ocupacion = scan.nextLine();
             cliente.setOcupacion(ocupacion);
-            System.out.println("Ingrese Email: ");
-            String email = scan.nextLine();
-            cliente.setEmail(email);
+            String emailValido="";
+            do{
+                try{
+                    System.out.println("Ingrese Email: ");
+                    String email = scan.nextLine();
+                    emailValido = chequearMailValido(email);
+                    cliente.setEmail(emailValido);
+                }catch(ValorNoValido e){
+                    System.out.println("Ingrese Mail valido");
+                }
+            }while(emailValido.isEmpty());
             System.out.println("Ingrese Telefono: ");
             String tel = scan.nextLine();
             cliente.setTelefono(tel);
             System.out.println("Cliente creado: ");
             System.out.println(cliente.toString());
-            System.out.println("Presione 0 para aceptar");
-            opcion = scan.nextInt();
+            System.out.println("Presione 1 para aceptar");
+            opcion = checkInput();
             scan.nextLine();
-        }while(opcion!=0);
+        }while(opcion!=1);
         empresa.agregarCliente(cliente);
     }
 
@@ -376,14 +406,11 @@ public class Menu {
             System.out.println("6. Listar Cuentas");
             System.out.println("7. Dar de baja Cuenta");
             System.out.println("8. Modificar Cuenta");
-            System.out.println("0. Volver");
-            opcion = scan.nextInt();
+            System.out.println("9. Volver");
+            opcion = checkInput();
             scan.nextLine();
 
             switch (opcion){
-                case 0:
-                    menuClientes();
-                    break;
                 case 1:
                     System.out.println("Nombre actual: "+ buscado.getNombreCompleto());
                     System.out.println("Ingrese nuevo nombre:");
@@ -425,14 +452,18 @@ public class Menu {
                         }else{
                             System.out.println("La cuenta no existe");
                         }
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
                     break;
                 case 8:
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("Cuentas Activas");
                     buscado.listarCuentas();
+                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("Cuentas NO Activas");
+                    buscado.listarCuentasInactivas();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     do{
                         System.out.println("Ingrese Nro de cuenta a modificar");
@@ -440,20 +471,32 @@ public class Menu {
                         Cuenta cuenta = buscado.buscarCuentaXNro(nro);
                         if(cuenta!=null){
                             System.out.println(cuenta.toString());
-                            modificarCuenta(cuenta, buscado);
+                            if(buscado.getIsActive()){
+                                modificarCuenta(cuenta,buscado);
+                            }else{
+                                System.out.println("Desea volver a activar al usuario? 1:SI 2:NO" );
+                                p = checkInput();
+                                scan.nextLine();
+                                if(p == 1){
+                                    cuenta.setActive();
+                                }
+                            }
                         }else{
                             System.out.println("La cuenta no existe");
                         }
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
+                    break;
+                case 9:
+                    menuClientes();
                     break;
                 default:
                     System.out.println("Comando no valido");
                     break;
             }
-        }while(opcion!=0);
+        }while(opcion!=9);
     }
 
     public void crearCuenta(Cliente c){
@@ -511,10 +554,10 @@ public class Menu {
             nuevaCuenta.setCategoria(categoriaDescuento);
             System.out.println("Cuenta creada: ");
             System.out.println(nuevaCuenta.toString());
-            System.out.println("Presione 0 para aceptar");
-            opcion = scan.nextInt();
+            System.out.println("Presione 1 para aceptar");
+            opcion = checkInput();
             scan.nextLine();
-        }while(opcion!=0);
+        }while(opcion!=1);
         c.agregarCuenta(nuevaCuenta);
     }
 
@@ -530,14 +573,11 @@ public class Menu {
             System.out.println("5. Cambiar Categoria de Descuento");
             System.out.println("6. Modificar Clave de Operador");
             System.out.println("7. Cambiar de Proveedor");
-            System.out.println("0. Volver");
-            opcion = scan.nextInt();
+            System.out.println("9. Volver");
+            opcion = checkInput();
             scan.nextLine();
 
             switch (opcion){
-                case 0:
-                    modificarCliente(buscado);
-                    break;
                 case 1:
                     System.out.println("Nro de cuenta actual: "+ buscada.getNroCuenta());
                     System.out.println("Ingrese nuevo Nro de cuenta:");
@@ -599,11 +639,14 @@ public class Menu {
                         System.out.println("Esta Cuenta no tiene monitoreo");
                     }
                     break;
+                case 9:
+                    modificarCliente(buscado);
+                    break;
                 default:
                     System.out.println("Comando no valido");
                     break;
             }
-        }while(opcion!=0);
+        }while(opcion!=9);
     }
     //endregion
 
@@ -617,33 +660,34 @@ public class Menu {
                 System.out.println("2. Modificar");
                 System.out.println("3. Crear");
                 System.out.println("4. Dar de baja");
-                System.out.println("0. Volver");
-                opcion = scan.nextInt();
+                System.out.println("9. Volver");
+                opcion = checkInput();
                 scan.nextLine();
             } else {
                 System.out.println("Menu Servicios");
                 System.out.println("1. Listar Servicios");
                 System.out.println("2. Modificar");
                 System.out.println("3. Crear");
-                System.out.println("0. Volver");
-                opcion = scan.nextInt();
+                System.out.println("9. Volver");
+                opcion = checkInput();
                 scan.nextLine();
             }
             switch (opcion){
-                case 0:
-                    menuInicio();
-                    break;
                 case 1:
                     do{
                         empresa.listarServicios();
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
                     break;
                 case 2:
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("Servicios Activos: ");
                     empresa.listarServicios();
+                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("Servicios NO Activos: ");
+                    empresa.listarServiciosInactivos();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     do{
                         System.out.println("Ingrese Nombre de Servicio a Modificar: ");
@@ -651,14 +695,23 @@ public class Menu {
                         Servicio buscado = empresa.buscarServicio(nombre);
                         if(buscado!=null){
                             System.out.println(buscado.toString());
-                            modificarServicio(buscado);
+                            if(buscado.getIsActive()){
+                                modificarServicio(buscado);
+                            }else{
+                                System.out.println("Desea volver a activar al servicio? 1:SI 2:NO" );
+                                p = checkInput();
+                                scan.nextLine();
+                                if(p == 1){
+                                    buscado.setActive();
+                                }
+                            }
                         }else{
                             System.out.println("El servicio no existe");
                         }
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
                     break;
                 case 3:
                     crearServicio();
@@ -679,17 +732,23 @@ public class Menu {
                         }else{
                             System.out.println("El Servicio no existe");
                         }
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
+                    break;
+                case 9:
+                    if(usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
+                        menuAdmin();
+                    }else {
+                        menuUser();
+                    }
                     break;
                 default:
                     System.out.println("Comando no valido");
                     break;
             }
-        }while(opcion!=0);
-
+        }while(opcion!=9);
     }
 
     public void modificarServicio(Servicio buscado){
@@ -699,14 +758,11 @@ public class Menu {
             System.out.println("1. Nombre de Servicio");
             System.out.println("2. Precio");
             System.out.println("3. Es comodato");
-            System.out.println("0. Volver");
-            opcion = scan.nextInt();
+            System.out.println("9. Volver");
+            opcion = checkInput();
             scan.nextLine();
 
             switch (opcion){
-                case 0:
-                    menuClientes();
-                    break;
                 case 1:
                     System.out.println("Nombre actual: "+ buscado.getNombreServicio());
                     System.out.println("Ingrese nuevo nombre:");
@@ -724,12 +780,17 @@ public class Menu {
                     buscado.setComodato(true);
                     System.out.println("El servicio ahora es comodato");
                     break;
+                case 9:
+                    menuClientes();
+                    break;
                 default:
                     System.out.println("Comando no valido");
                     break;
             }
-        }while(opcion!=0);
+        }while(opcion!=9);
     }
+
+
 
     public void crearServicio(){
         int opcion;
@@ -743,10 +804,10 @@ public class Menu {
             System.out.println("Ingrese Precio del Servicio:");
             double precio = scan.nextDouble();
             servicio.setPrecio(precio);
-            System.out.println("Presione 0 para aceptar");
-            opcion = scan.nextInt();
+            System.out.println("Presione 1 para aceptar");
+            opcion = checkInput();
             scan.nextLine();
-        }while(opcion!=0);
+        }while(opcion!=1);
         empresa.agregarServicio(servicio);
     }
     //endregion
@@ -759,20 +820,17 @@ public class Menu {
             System.out.println("1. Listar Categoria Descuentos");
             System.out.println("2. Modificar");
             System.out.println("3. Crear");
-            System.out.println("0. Volver");
-            opcion = scan.nextInt();
+            System.out.println("9. Volver");
+            opcion = checkInput();
             scan.nextLine();
             switch (opcion){
-                case 0:
-                    menuInicio();
-                    break;
                 case 1:
                     do{
                         empresa.listarCategoriasDesc();
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
                     break;
                 case 2:
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
@@ -788,20 +846,27 @@ public class Menu {
                         }else{
                             System.out.println("La Categoria de Descuento no existe");
                         }
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
                     break;
                 case 3:
                     crearCategoriaDesc();
                     System.out.println("Servicio agregado");
                     break;
+                case 9:
+                    if(usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
+                        menuAdmin();
+                    }else {
+                        menuUser();
+                    }
+                    break;
                 default:
                     System.out.println("Comando no valido");
                     break;
             }
-        }while(opcion!=0);
+        }while(opcion!=9);
 
     }
 
@@ -811,14 +876,11 @@ public class Menu {
             System.out.println("Que desea modificar?");
             System.out.println("1. Nombre de Categoria de Descuento");
             System.out.println("2. Porcentaje de Descuento");
-            System.out.println("0. Volver");
-            opcion = scan.nextInt();
+            System.out.println("9. Volver");
+            opcion = checkInput();
             scan.nextLine();
 
             switch (opcion){
-                case 0:
-                    menuCategoriaDesc();
-                    break;
                 case 1:
                     System.out.println("Nombre actual: "+ buscado.getNombre());
                     System.out.println("Ingrese nuevo nombre:");
@@ -832,11 +894,14 @@ public class Menu {
                     scan.nextLine();
                     buscado.setPorcentajeDescuento(descuento);
                     break;
+                case 9:
+                    menuCategoriaDesc();
+                    break;
                 default:
                     System.out.println("Comando no valido");
                     break;
             }
-        }while(opcion!=0);
+        }while(opcion!=9);
     }
 
     public void crearCategoriaDesc(){
@@ -851,10 +916,10 @@ public class Menu {
             System.out.println("Ingrese Descuento de la Categoria de descuento:");
             double porcentaje = scan.nextDouble();
             descuento.setPorcentajeDescuento(porcentaje);
-            System.out.println("Presione 0 para aceptar");
-            opcion = scan.nextInt();
+            System.out.println("Presione 1 para aceptar");
+            opcion = checkInput();
             scan.nextLine();
-        }while(opcion!=0);
+        }while(opcion!=1);
         empresa.agregarCategoriaDesc(descuento);
     }
     //endregion
@@ -869,29 +934,26 @@ public class Menu {
                 System.out.println("2. Modificar");
                 System.out.println("3. Crear");
                 System.out.println("4. Eliminar");
-                System.out.println("0. Volver");
-                opcion = scan.nextInt();
+                System.out.println("9. Volver");
+                opcion = checkInput();
                 scan.nextLine();
             } else {
                 System.out.println("Menu Proveedores");
                 System.out.println("1. Listar Proveedores");
                 System.out.println("2. Modificar");
                 System.out.println("3. Crear");
-                System.out.println("0. Volver");
-                opcion = scan.nextInt();
+                System.out.println("9. Volver");
+                opcion = checkInput();
                 scan.nextLine();
             }
             switch (opcion){
-                case 0:
-                    menuInicio();
-                    break;
                 case 1:
                     do{
                         empresa.listarProveedores();
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
                     break;
                 case 2:
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
@@ -907,10 +969,10 @@ public class Menu {
                         }else{
                             System.out.println("El Proveedor no existe");
                         }
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
                     break;
                 case 3:
                     crearProveedor();
@@ -931,17 +993,23 @@ public class Menu {
                         }else{
                             System.out.println("El Proveedor no existe");
                         }
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
+                    break;
+                case 9:
+                    if(usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
+                        menuAdmin();
+                    }else {
+                        menuUser();
+                    }
                     break;
                 default:
                     System.out.println("Comando no valido");
                     break;
             }
-        }while(opcion!=0);
-
+        }while(opcion!=9);
     }
 
     public void modificarProveedor(Proveedor buscado){
@@ -950,14 +1018,11 @@ public class Menu {
             System.out.println("Que desea modificar?");
             System.out.println("1. Nombre de Proveedor");
             System.out.println("2. Numero de Telefono");
-            System.out.println("0. Volver");
-            opcion = scan.nextInt();
+            System.out.println("9. Volver");
+            opcion = checkInput();
             scan.nextLine();
 
             switch (opcion){
-                case 0:
-                    menuClientes();
-                    break;
                 case 1:
                     System.out.println("Nombre actual: "+ buscado.getNombre());
                     System.out.println("Ingrese nuevo nombre:");
@@ -970,17 +1035,20 @@ public class Menu {
                     String tel = scan.nextLine();
                     buscado.setTelefono(tel);
                     break;
+                case 9:
+                    menuProveedores();
+                    break;
                 default:
                     System.out.println("Comando no valido");
                     break;
             }
-        }while(opcion!=0);
+        }while(opcion!=9);
     }
 
     public void crearProveedor(){
         int opcion;
         empresa.getUltimosIds();
-        Proveedor proveedor = new Proveedor(empresa.getIdServicio());
+        Proveedor proveedor = new Proveedor(empresa.getIdProveedor());
         do{
             System.out.println("Creacion Proveedor Nuevo");
             System.out.println("Ingrese Nombre De Proveedor:");
@@ -989,11 +1057,16 @@ public class Menu {
             System.out.println("Ingrese Numero de Telefono del Proveedor:");
             String numero = scan.nextLine();
             proveedor.setTelefono(numero);
-            System.out.println("Presione 0 para aceptar");
-            opcion = scan.nextInt();
+            System.out.println("Presione 1 para aceptar / 0 para cancelar");
+            opcion = checkInput();
             scan.nextLine();
-        }while(opcion!=0);
-        empresa.agregarProveedor(proveedor);
+        }while(opcion!=1 && opcion!=0);
+        if (opcion==1){
+            empresa.agregarProveedor(proveedor);
+        }else {
+            menuProveedores();
+        }
+
     }
     //endregion
 
@@ -1006,70 +1079,93 @@ public class Menu {
                 System.out.println("2. Modificar");
                 System.out.println("3. Crear");
                 System.out.println("4. Eliminar");
-                System.out.println("0. Volver");
-                opcion = scan.nextInt();
+                System.out.println("9. Volver");
+                opcion = checkInput();
                 scan.nextLine();
 
             switch (opcion){
-                case 0:
-                    menuInicio();
-                    break;
                 case 1:
                     do{
                         empresa.listarUsuarios();
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
                     break;
                 case 2:
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("Usuarios Activos: ");
                     empresa.listarUsuarios();
+                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("Usuarios NO Activos: ");
+                    empresa.listarUsuariosInactivos();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     do{
                         System.out.println("Ingrese Nombre de Usuario a Modificar: ");
                         String nombre = scan.nextLine();
-                        Usuario buscado = empresa.buscarUsuarioPorNombre(nombre);
+                        Usuario buscado = empresa.buscarUsuario(nombre);
                         if(buscado!=null){
                             System.out.println(buscado.toString());
-                            modificarUsuario(buscado);
+                            if(buscado.getIsActive()){
+                                modificarUsuario(buscado);
+                            }else{
+                                System.out.println("Desea volver a activar al usuario? 1:SI 2:NO" );
+                                p = checkInput();
+                                scan.nextLine();
+                                if(p == 1){
+                                    buscado.setActive();
+                                }
+                            }
                         }else{
                             System.out.println("El Usuario no existe");
                         }
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
                     break;
                 case 3:
-                    crearUsuario();
-                    System.out.println("Usuario agregado");
+                    try{
+                        crearUsuario();
+                        System.out.println("Usuario agregado");
+                    }
+                    catch (UsuarioExiste e){
+                        System.out.println(e.getMessage());
+                        menuUsuarios();
+                    }
                     break;
                 case 4:
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     empresa.listarUsuarios();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     do{
-                        System.out.println("Ingrese Nombre de Usuario a eliminar");
+                        System.out.println("Ingrese Nombre de Usuario a dar de baja");
                         String nombreUsuario = scan.nextLine();
-                        Usuario buscado = empresa.buscarUsuarioPorNombre(nombreUsuario);
+                        Usuario buscado = empresa.buscarUsuario(nombreUsuario);
                         if(buscado!=null){
                             System.out.println(buscado.toString());
-                            empresa.eliminarUsuario(buscado);
-                            System.out.println("Usuario Eliminado");
+                            buscado.setNotActive();
+                            System.out.println("Usuario dado de baja");
                         }else{
                             System.out.println("El Usuario no existe");
                         }
-                        System.out.println("Presione 0 para volver");
-                        p = scan.nextInt();
+                        System.out.println("Presione 1 para volver");
+                        p = checkInput();
                         scan.nextLine();
-                    }while(p!=0);
+                    }while(p!=1);
+                    break;
+                case 9:
+                    if(usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
+                        menuAdmin();
+                    }else {
+                        menuUser();
+                    }
                     break;
                 default:
                     System.out.println("Comando no valido");
                     break;
             }
-        }while(opcion!=0);
+        }while(opcion!=9);
 
     }
 
@@ -1080,14 +1176,11 @@ public class Menu {
             System.out.println("1. Nombre de Usuario");
             System.out.println("2. Contraseña de Usuario");
             System.out.println("3. Cambio Tipo de Usuario");
-            System.out.println("0. Volver");
-            opcion = scan.nextInt();
+            System.out.println("9. Volver");
+            opcion = checkInput();
             scan.nextLine();
 
             switch (opcion){
-                case 0:
-                    menuUsuarios();
-                    break;
                 case 1:
                     System.out.println("Nombre actual: "+ buscado.getNombre());
                     System.out.println("Ingrese nuevo nombre:");
@@ -1112,78 +1205,104 @@ public class Menu {
                         System.out.println("El cambio no fue hecho");
                     }
                     break;
+                case 9:
+                    menuUsuarios();
+                    break;
                 default:
                     System.out.println("Comando no valido");
                     break;
             }
-        }while(opcion!=0);
+        }while(opcion!=9);
     }
 
-    public void crearUsuario(){
+    public void crearUsuario()throws UsuarioExiste {
         int opcion, opcion1;
         empresa.getUltimosIds();
         Usuario usuario = new Usuario(empresa.getIdUsuario());
         do{
             System.out.println("Creacion Usuario Nuevo");
-            System.out.println("Ingrese DNI del Usuario:");
-            String dni = scan.nextLine();
-            usuario.setDni(dni);
-            Usuario buscado = empresa.buscarUsuarioXDni(dni);
-            if(buscado!=null){
-                int a = 1;
-                do{
-                    System.out.println("El DNI ingresado ya existe");
-                    System.out.println("Presione 0 para continuar");
-                }while (a!=0);
-                menuUsuarios();
-            }
             System.out.println("Ingrese Nombre De Usuario:");
             String nombre = scan.nextLine();
             usuario.setNombre(nombre);
+            Usuario buscado = empresa.buscarUsuario(nombre);
+            if(buscado!=null){
+                throw new UsuarioExiste("El Usuario ya existe");
+            }
             System.out.println("Ingrese Contraseña de Usuario:");
             String contraseña = scan.nextLine();
             usuario.setContraseña(contraseña);
+            System.out.println("Ingrese DNI del Usuario:");
+            String dni = scan.nextLine();
+            usuario.setDni(dni);
             System.out.println("Ingrese Nombre Completo del Usuario:");
             String nombreCompleto = scan.nextLine();
             usuario.setNombreCompleto(nombreCompleto);
-            System.out.println("Ingrese Email del Usuario:");
-            String email = scan.nextLine();
-            usuario.setEmail(email);
+            String emailValido="";
+            do{
+                try{
+                    System.out.println("Ingrese Email: ");
+                    String email = scan.nextLine();
+                    emailValido = chequearMailValido(email);
+                    usuario.setEmail(emailValido);
+                }catch(ValorNoValido e){
+                    System.out.println("Ingrese Mail valido");
+                }
+            }while(emailValido.isEmpty());
             System.out.println("Seleccione Tipo de Usuario");
             do {
                 System.out.println("1. Tipo Administrador");
                 System.out.println("2. Tipo Usuario");
-                System.out.println("0. Volver");
-                opcion1 = scan.nextInt();
+                opcion1 = checkInput();
                 scan.nextLine();
 
                 switch (opcion1){
-                    case 0:
-                        menuUsuarios();
-                        break;
                     case 1:
                         usuario.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
-                        System.out.println("Presione 0 para confirmar tipo de usuario");
-                        opcion1 = scan.nextInt();
+                        System.out.println("Presione 1 para confirmar tipo de usuario");
+                        opcion1 = checkInput();
                         scan.nextLine();
                         break;
                     case 2:
                         usuario.setTipoUsuario(TipoUsuario.USUARIO);
-                        System.out.println("Presione 0 para confirmar tipo de usuario");
-                        opcion1 = scan.nextInt();
+                        System.out.println("Presione 1 para confirmar tipo de usuario");
+                        opcion1 = checkInput();
                         scan.nextLine();
                         break;
                     default:
                         System.out.println("Comando no valido");
                         break;
                 }
-            }while(opcion1!=0);
-            System.out.println("Presione 0 para confirmar creacion de usuario nuevo");
-            opcion = scan.nextInt();
+            }while(opcion1!=1);
+            System.out.println("Presione 1 para confirmar creacion de usuario nuevo");
+            opcion = checkInput();
             scan.nextLine();
-        }while(opcion!=0);
+        }while(opcion!=1);
         empresa.agregarUsuario(usuario);
     }
     //endregion
+
+    public int checkInput(){
+        try{
+            int input = scan.nextInt();
+            return input;
+        }catch (RuntimeException e){
+            System.out.println("Valor no valido");
+            return 0;
+        }
+    }
+
+    public String chequearMailValido(String email) throws ValorNoValido {
+        String emailPattern = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@" + "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
+        Pattern pattern = Pattern.compile(emailPattern);
+        if (email != null) {
+            Matcher matcher = pattern.matcher(email);
+            if (matcher.matches()) {
+                return email;
+            }else{
+                throw new ValorNoValido("Email no valido");
+            }
+        }
+        return email;
+    }
 }
 

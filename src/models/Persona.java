@@ -17,6 +17,7 @@ public class Persona {
 
     public boolean getIsActive(){return isActive;}
     public void setNotActive(){this.isActive=false;}
+    public void setActive(){this.isActive=true;}
     public String getNombreCompleto() {
         return nombreCompleto;
     }
@@ -43,8 +44,8 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "nombre:'" + nombreCompleto + '\'' +
-                ", dni:'" + dni + '\'' +
-                ", email:'" + email + '\'';
+        return "Nombre= " + nombreCompleto + " || " +
+                "dni= " + dni + " || " +
+                "email= " + email + " || ";
     }
 }

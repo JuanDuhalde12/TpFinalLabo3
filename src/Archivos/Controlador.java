@@ -57,7 +57,7 @@ public class Controlador {
 
     public void actualizarArchivoUsuarios(Coleccion<Usuario> coleccion){
         ArrayList<Usuario> lista = coleccion.getLista();
-        usuarios.crearArchivoJson(lista);
+        usuarios.crearArchivo(lista);
     }
 
     public void actualizarArchivoServicios(Coleccion<Servicio> coleccion){

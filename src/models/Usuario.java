@@ -16,9 +16,11 @@ public class Usuario extends Persona{
         this.nombre = nombre;
         this.contraseña = contraseña;
         this.tipoUsuario = tipoUsuario;
+
     }
 
     public Usuario(String nombre, String contraseña, TipoUsuario tipoUsuario) {
+        super();
         this.nombre = nombre;
         this.contraseña = contraseña;
         this.tipoUsuario = tipoUsuario;
@@ -80,16 +82,12 @@ public class Usuario extends Persona{
         }
     }
 
-
-
-
-
     @Override
     public String toString() {
-        return "Usuario{ " + super.toString() +
-                ", nombre='" + nombre + '\'' +
-                ", contraseña='" + contraseña + '\'' +
-                ", tipoUsuario=" + tipoUsuario +
-                "} " ;
+        return "Usuario >> " + super.toString() +
+                "nombre= " + nombre + " || " +
+                "contraseña= " + contraseña + " || " +
+                "tipoUsuario= " + tipoUsuario +
+                " <<";
     }
 }
