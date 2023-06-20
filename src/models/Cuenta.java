@@ -31,24 +31,20 @@ public class Cuenta {
     public String getClaveOperador() {
         return claveOperador;
     }
-
     public void setClaveOperador(String claveOperador) {
         this.claveOperador = claveOperador;
     }
-
     public boolean getIsActive() {
         return isActive;
     }
-
     public void setNotActive(){this.isActive=false;}
+    public void setActive(){this.isActive=true;}
     public String getFechaAlta() {
         return fechaAlta;
     }
-
     public void setFechaAlta(String fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
-
     public String getFechaAumento() {
         return fechaAumento;
     }
