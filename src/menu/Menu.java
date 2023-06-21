@@ -40,6 +40,7 @@ public class Menu {
     public void menuInicio(){
         int opcion;
         do {
+            System.out.println("");
             System.out.println("Bienvenido al sistema");
             System.out.println("1. Log In");
             System.out.println("2. Salir");
@@ -81,6 +82,7 @@ public class Menu {
     public void menuAdmin(){
         int opcion;
         do {
+            System.out.println("");
             System.out.println("Bienvenido al sistema");
             System.out.println("1. Clientes");
             System.out.println("2. Servicios");
@@ -122,6 +124,7 @@ public class Menu {
     public void menuUser(){
         int opcion,p;
         do {
+            System.out.println("");
             System.out.println("Bienvenido al sistema");
             System.out.println("1. Clientes");
             System.out.println("2. Servicios");
@@ -160,6 +163,7 @@ public class Menu {
         int opcion, p, q;
         do {
             if(this.usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
+                System.out.println("");
                 System.out.println("Menu Cliente");
                 System.out.println("1. Buscar");
                 System.out.println("2. Modificar/Cuentas");
@@ -170,6 +174,7 @@ public class Menu {
                 opcion = checkInput();
                 scan.nextLine();
             }else{
+                System.out.println("");
                 System.out.println("Menu Cliente");
                 System.out.println("1. Buscar");
                 System.out.println("2. Modificar/Cuentas");
@@ -184,6 +189,7 @@ public class Menu {
                     buscarCliente();
                     break;
                 case 2:
+                    System.out.println("");
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     System.out.println("CLientes Activos: ");
                     empresa.listarClientes();
@@ -226,6 +232,7 @@ public class Menu {
                     }
                     break;
                 case 4:
+                    System.out.println("");
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     empresa.listarClientes();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
@@ -237,6 +244,7 @@ public class Menu {
                     break;
                 case 5:
                     do{
+                        System.out.println("");
                         System.out.println("Ingrese Dni cliente a dar de baja");
                         String dni = scan.nextLine();
                         Cliente buscado = empresa.buscarClienteXDni(dni);
@@ -271,6 +279,7 @@ public class Menu {
     public void buscarCliente(){
         int opcion, p;
         do {
+            System.out.println("");
             System.out.println("Por que dato desea buscar?");
             System.out.println("1. Nombre");
             System.out.println("2. DNI");
@@ -283,6 +292,7 @@ public class Menu {
             switch (opcion){
                 case 1:
                     do{
+                        System.out.println("");
                         System.out.println("Ingrese Nombre completo de cliente a buscar");
                         String nombre = scan.nextLine();
                         Cliente buscado = empresa.buscarClienteXNombre(nombre);
@@ -298,6 +308,7 @@ public class Menu {
                     break;
                 case 2:
                     do{
+                        System.out.println("");
                         System.out.println("Ingrese dni cliente a buscar");
                         String dni = scan.nextLine();
                         Cliente buscado = empresa.buscarClienteXDni(dni);
@@ -313,6 +324,7 @@ public class Menu {
                     break;
                 case 3:
                     do{
+                        System.out.println("");
                         System.out.println("Ingrese domicilio de cliente a buscar");
                         String domicilio = scan.nextLine();
                         Cliente buscado = empresa.buscarClienteXDomicilio(domicilio);
@@ -328,6 +340,7 @@ public class Menu {
                     break;
                 case 4:
                     do{
+                        System.out.println("");
                         System.out.println("Ingrese Telefono de cliente a buscar");
                         String telefono = scan.nextLine();
                         Cliente buscado = empresa.buscarClienteXTelefono(telefono);
@@ -357,6 +370,7 @@ public class Menu {
         empresa.getUltimosIds();
         Cliente cliente = new Cliente(empresa.getIdCliente());
         do{
+            System.out.println("");
             System.out.println("Creacion cliente");
             System.out.println("Ingrese DNI:");
             String dni = scan.nextLine();
@@ -400,6 +414,7 @@ public class Menu {
     public void modificarCliente(Cliente buscado){
         int opcion, p;
         do {
+            System.out.println("");
             System.out.println("Que desea hacer?");
             System.out.println("1. Modificar Nombre");
             System.out.println("2. Modificar DNI");
@@ -415,24 +430,28 @@ public class Menu {
 
             switch (opcion){
                 case 1:
+                    System.out.println("");
                     System.out.println("Nombre actual: "+ buscado.getNombreCompleto());
                     System.out.println("Ingrese nuevo nombre:");
                     String nuevoNombre = scan.nextLine();
                     buscado.setNombreCompleto(nuevoNombre);
                     break;
                 case 2:
+                    System.out.println("");
                     System.out.println("DNI actual: "+ buscado.getDni());
                     System.out.println("Ingrese nuevo DNI:");
                     String nuevoDni = scan.nextLine();
                     buscado.setDni(nuevoDni);
                     break;
                 case 3:
+                    System.out.println("");
                     System.out.println("Domicilio actual: "+ buscado.getDomicilio());
                     System.out.println("Ingrese nuevo Domicilio:");
                     String nuevoDomicilio = scan.nextLine();
                     buscado.setDomicilio(nuevoDomicilio);
                     break;
                 case 4:
+                    System.out.println("");
                     System.out.println("Ocupacion actual: "+ buscado.getOcupacion());
                     System.out.println("Ingrese nueva Ocupacion:");
                     String nuevoOcupacion = scan.nextLine();
@@ -446,6 +465,7 @@ public class Menu {
                     break;
                 case 7:
                     do{
+                        System.out.println("");
                         System.out.println("Ingrese Nro de cuenta a dar de baja");
                         String nroCuenta = scan.nextLine();
                         Cuenta cuenta = buscado.buscarCuentaXNro(nroCuenta);
@@ -461,6 +481,7 @@ public class Menu {
                     }while(p!=1);
                     break;
                 case 8:
+                    System.out.println("");
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     System.out.println("Cuentas Activas");
                     buscado.listarCuentas();
@@ -507,6 +528,7 @@ public class Menu {
         int opcion;
         Cuenta nuevaCuenta = new Cuenta(c.getId(),c.getUltimoIdCuenta());
         do{
+            System.out.println("");
             System.out.println("Cuentas de "+ c.getNombreCompleto());
             System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
             c.listarCuentas();
@@ -569,6 +591,7 @@ public class Menu {
     public void modificarCuenta(Cuenta buscada, Cliente buscado){
         int opcion, p;
         do {
+            System.out.println("");
             System.out.println("Que desea modificar?");
             System.out.println("1. Modificar Nro Cuenta");
             System.out.println("2. Modificar Domicilio del servicio");
@@ -583,18 +606,21 @@ public class Menu {
 
             switch (opcion){
                 case 1:
+                    System.out.println("");
                     System.out.println("Nro de cuenta actual: "+ buscada.getNroCuenta());
                     System.out.println("Ingrese nuevo Nro de cuenta:");
                     String nroCuenta = scan.nextLine();
                     buscada.setNroCuenta(nroCuenta);
                     break;
                 case 2:
+                    System.out.println("");
                     System.out.println("Domicilio actual: "+ buscada.getDomicilioServicio());
                     System.out.println("Ingrese nuevo Domicilio:");
                     String domicilio = scan.nextLine();
                     buscada.setDomicilioServicio(domicilio);
                     break;
                 case 3:
+                    System.out.println("");
                     System.out.println("Fecha de alta actual: "+ buscada.getFechaAlta());
                     System.out.println("Ingrese Fecha Alta nueva (aaaa-MM-dd) ejemplo "+ LocalDate.now());
                     String fechaAlta = scan.nextLine();
@@ -602,6 +628,7 @@ public class Menu {
                     buscada.setFechaAlta(fechaAlta);
                     break;
                 case 4:
+                    System.out.println("");
                     System.out.println("Fecha de ultimo aumento actual: "+ buscada.getFechaAumento());
                     System.out.println("Ingrese Fecha de Nuevo aumento (aaaa-MM-dd) ejemplo "+ LocalDate.now());
                     String fechaAumento = scan.nextLine();
@@ -609,6 +636,7 @@ public class Menu {
                     buscada.setFechaAumento(fechaAumento);
                     break;
                 case 5:
+                    System.out.println("");
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     empresa.listarCategoriasDesc();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
@@ -621,6 +649,7 @@ public class Menu {
                     buscada.setCategoria(categoriaDescuento);
                     break;
                 case 6:
+                    System.out.println("");
                     System.out.println("Clave de operador actual: "+ buscada.getClaveOperador());
                     System.out.println("Ingrese nueva Clave de operador:");
                     String clave = scan.nextLine();
@@ -630,6 +659,7 @@ public class Menu {
                     Proveedor proveedor = null;
                     Servicio servicio = null;
                     if(servicio.getNombreServicio().equals("Monitoreo")){
+                        System.out.println("");
                         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                         empresa.listarProveedores();
                         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
@@ -659,6 +689,7 @@ public class Menu {
         int opcion, p;
         do {
             if (this.usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+                System.out.println("");
                 System.out.println("Menu Servicio");
                 System.out.println("1. Listar Servicios");
                 System.out.println("2. Modificar");
@@ -668,6 +699,7 @@ public class Menu {
                 opcion = checkInput();
                 scan.nextLine();
             } else {
+                System.out.println("");
                 System.out.println("Menu Servicios");
                 System.out.println("1. Listar Servicios");
                 System.out.println("2. Modificar");
@@ -686,6 +718,7 @@ public class Menu {
                     }while(p!=1);
                     break;
                 case 2:
+                    System.out.println("");
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     System.out.println("Servicios Activos: ");
                     empresa.listarServicios();
@@ -722,6 +755,7 @@ public class Menu {
                     System.out.println("Servicio agregado");
                     break;
                 case 4:
+                    System.out.println("");
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     empresa.listarServicios();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
@@ -759,6 +793,7 @@ public class Menu {
     public void modificarServicio(Servicio buscado){
         int opcion;
         do {
+            System.out.println("");
             System.out.println("Que desea modificar?");
             System.out.println("1. Nombre de Servicio");
             System.out.println("2. Precio");
@@ -769,12 +804,14 @@ public class Menu {
 
             switch (opcion){
                 case 1:
+                    System.out.println("");
                     System.out.println("Nombre actual: "+ buscado.getNombreServicio());
                     System.out.println("Ingrese nuevo nombre:");
                     String nuevoNombre = scan.nextLine();
                     buscado.setNombreServicio(nuevoNombre);
                     break;
                 case 2:
+                    System.out.println("");
                     System.out.println("Precio actual: "+ buscado.getPrecio());
                     System.out.println("Ingrese nuevo precio:");
                     double precio = scan.nextDouble();
@@ -802,6 +839,7 @@ public class Menu {
         empresa.getUltimosIds();
         Servicio servicio = new Servicio(empresa.getIdServicio());
         do{
+            System.out.println("");
             System.out.println("Creacion Servicio Nuevo");
             System.out.println("Ingrese Nombre De Servicio:");
             String nombre = scan.nextLine();
@@ -821,6 +859,7 @@ public class Menu {
     public void menuCategoriaDesc() {
         int opcion, p;
         do {
+            System.out.println("");
             System.out.println("Menu Categoria Descuentos");
             System.out.println("1. Listar Categoria Descuentos");
             System.out.println("2. Modificar");
@@ -838,6 +877,7 @@ public class Menu {
                     }while(p!=1);
                     break;
                 case 2:
+                    System.out.println("");
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     empresa.listarCategoriasDesc();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
@@ -879,6 +919,7 @@ public class Menu {
     public void modificarCategoriaDesc(CategoriaDescuento buscado){
         int opcion;
         do {
+            System.out.println("");
             System.out.println("Que desea modificar?");
             System.out.println("1. Nombre de Categoria de Descuento");
             System.out.println("2. Porcentaje de Descuento");
@@ -888,12 +929,14 @@ public class Menu {
 
             switch (opcion){
                 case 1:
+                    System.out.println("");
                     System.out.println("Nombre actual: "+ buscado.getNombre());
                     System.out.println("Ingrese nuevo nombre:");
                     String nuevoNombre = scan.nextLine();
                     buscado.setNombre(nuevoNombre);
                     break;
                 case 2:
+                    System.out.println("");
                     System.out.println("Descuento actual: %"+ buscado.getPorcentajeDescuento());
                     System.out.println("Ingrese nuevo porcentaje de descuento:");
                     double descuento = scan.nextDouble();
@@ -915,6 +958,7 @@ public class Menu {
         empresa.getUltimosIds();
         CategoriaDescuento descuento = new CategoriaDescuento(empresa.getIdCatDesc());
         do{
+            System.out.println("");
             System.out.println("Creacion Categoria de descuento Nueva");
             System.out.println("Ingrese Nombre De la Categoria de descuento:");
             String nombre = scan.nextLine();
@@ -935,6 +979,7 @@ public class Menu {
         int opcion, p;
         do {
             if (this.usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+                System.out.println("");
                 System.out.println("Menu Proveedores");
                 System.out.println("1. Listar Proveedores");
                 System.out.println("2. Modificar");
@@ -944,6 +989,7 @@ public class Menu {
                 opcion = checkInput();
                 scan.nextLine();
             } else {
+                System.out.println("");
                 System.out.println("Menu Proveedores");
                 System.out.println("1. Listar Proveedores");
                 System.out.println("2. Modificar");
@@ -955,6 +1001,7 @@ public class Menu {
             switch (opcion){
                 case 1:
                     do{
+                        System.out.println("");
                         empresa.listarProveedores();
                         System.out.println("Presione 1 para volver");
                         p = checkInput();
@@ -962,6 +1009,7 @@ public class Menu {
                     }while(p!=1);
                     break;
                 case 2:
+                    System.out.println("");
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     empresa.listarProveedores();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
@@ -985,6 +1033,7 @@ public class Menu {
                     System.out.println("Proveedor agregado");
                     break;
                 case 4:
+                    System.out.println("");
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     empresa.listarProveedores();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
@@ -1022,6 +1071,7 @@ public class Menu {
     public void modificarProveedor(Proveedor buscado){
         int opcion;
         do {
+            System.out.println("");
             System.out.println("Que desea modificar?");
             System.out.println("1. Nombre de Proveedor");
             System.out.println("2. Numero de Telefono");
@@ -1031,12 +1081,14 @@ public class Menu {
 
             switch (opcion){
                 case 1:
+                    System.out.println("");
                     System.out.println("Nombre actual: "+ buscado.getNombre());
                     System.out.println("Ingrese nuevo nombre:");
                     String nuevoNombre = scan.nextLine();
                     buscado.setNombre(nuevoNombre);
                     break;
                 case 2:
+                    System.out.println("");
                     System.out.println("Telefono actual: "+ buscado.getTelefono());
                     System.out.println("Ingrese nuevo Numero de telefono:");
                     String tel = scan.nextLine();
@@ -1057,6 +1109,7 @@ public class Menu {
         empresa.getUltimosIds();
         Proveedor proveedor = new Proveedor(empresa.getIdProveedor());
         do{
+            System.out.println("");
             System.out.println("Creacion Proveedor Nuevo");
             System.out.println("Ingrese Nombre De Proveedor:");
             String nombre = scan.nextLine();
@@ -1081,6 +1134,7 @@ public class Menu {
     public void menuUsuarios() {
         int opcion, p;
         do {
+                System.out.println("");
                 System.out.println("Menu Usuarios");
                 System.out.println("1. Listar Usuarios");
                 System.out.println("2. Modificar");
@@ -1093,6 +1147,7 @@ public class Menu {
             switch (opcion){
                 case 1:
                     do{
+                        System.out.println("");
                         empresa.listarUsuarios();
                         System.out.println("Presione 1 para volver");
                         p = checkInput();
@@ -1100,6 +1155,7 @@ public class Menu {
                     }while(p!=1);
                     break;
                 case 2:
+                    System.out.println("");
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     System.out.println("Usuarios Activos: ");
                     empresa.listarUsuarios();
@@ -1142,6 +1198,7 @@ public class Menu {
                     }
                     break;
                 case 4:
+                    System.out.println("");
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
                     empresa.listarUsuarios();
                     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
@@ -1180,6 +1237,7 @@ public class Menu {
     public void modificarUsuario(Usuario buscado){
         int opcion;
         do {
+            System.out.println("");
             System.out.println("Que desea modificar?");
             System.out.println("1. Nombre de Usuario");
             System.out.println("2. Contraseña de Usuario");
@@ -1190,18 +1248,21 @@ public class Menu {
 
             switch (opcion){
                 case 1:
+                    System.out.println("");
                     System.out.println("Nombre actual: "+ buscado.getNombre());
                     System.out.println("Ingrese nuevo nombre:");
                     String nuevoNombre = scan.nextLine();
                     buscado.setNombre(nuevoNombre);
                     break;
                 case 2:
+                    System.out.println("");
                     System.out.println("Contraseña actual: "+ buscado.getContraseña());
                     System.out.println("Ingrese nueva Contraseña:");
                     String cont = scan.nextLine();
                     buscado.setContraseña(cont);
                     break;
                 case 3:
+                    System.out.println("");
                     int flag = 0;
                     System.out.println("Tipo de Usuario actual: "+ buscado.getTipoUsuario());
                     buscado.mostrarElOtroTipo();
@@ -1228,6 +1289,7 @@ public class Menu {
         empresa.getUltimosIds();
         Usuario usuario = new Usuario(empresa.getIdUsuario());
         do{
+            System.out.println("");
             System.out.println("Creacion Usuario Nuevo");
             System.out.println("Ingrese Nombre De Usuario:");
             String nombre = scan.nextLine();
