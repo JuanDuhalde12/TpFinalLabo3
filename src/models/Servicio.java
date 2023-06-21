@@ -71,8 +71,6 @@ public class Servicio {
     public String toString() {
         return "Servicio >> " +
                 "nombreServicio= " + nombreServicio + " || " +
-                "precio= " + precio + " || " +
-                "isComodato= " + isComodato +
-                " <<";
+                "precio= " + precio +" <<";
     }
 }

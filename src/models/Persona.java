@@ -1,6 +1,6 @@
 package models;
 
-public class Persona {
+public abstract class Persona {
     private String nombreCompleto, dni, email;
     private boolean isActive;
 
