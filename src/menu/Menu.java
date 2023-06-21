@@ -108,6 +108,7 @@ public class Menu {
                     menuUsuarios();
                     break;
                 case 9:
+                    empresa.actualizarArchivos();
                     menuInicio();
                     break;
                 default:
@@ -144,6 +145,7 @@ public class Menu {
                     menuProveedores();
                     break;
                 case 9:
+                    empresa.actualizarArchivos();
                     menuInicio();
                     break;
                 default:
@@ -251,6 +253,7 @@ public class Menu {
                     }while(p!=1);
                     break;
                 case 9:
+                    empresa.actualizarArchivos();
                     if(usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
                         menuAdmin();
                     }else {
@@ -490,6 +493,7 @@ public class Menu {
                     }while(p!=1);
                     break;
                 case 9:
+                    empresa.actualizarArchivos();
                     menuClientes();
                     break;
                 default:
@@ -738,6 +742,7 @@ public class Menu {
                     }while(p!=1);
                     break;
                 case 9:
+                    empresa.actualizarArchivos();
                     if(usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
                         menuAdmin();
                     }else {
@@ -781,7 +786,7 @@ public class Menu {
                     System.out.println("El servicio ahora es comodato");
                     break;
                 case 9:
-                    menuClientes();
+                    menuServicios();
                     break;
                 default:
                     System.out.println("Comando no valido");
@@ -856,6 +861,7 @@ public class Menu {
                     System.out.println("Servicio agregado");
                     break;
                 case 9:
+                    empresa.actualizarArchivos();
                     if(usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
                         menuAdmin();
                     }else {
@@ -999,6 +1005,7 @@ public class Menu {
                     }while(p!=1);
                     break;
                 case 9:
+                    empresa.actualizarArchivos();
                     if(usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
                         menuAdmin();
                     }else {
@@ -1155,6 +1162,7 @@ public class Menu {
                     }while(p!=1);
                     break;
                 case 9:
+                    empresa.actualizarArchivos();
                     if(usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
                         menuAdmin();
                     }else {
